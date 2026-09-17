@@ -21,16 +21,16 @@
       <main>
         <section class="intro">
           <div class="intro-copy">
-            <p class="kicker">XIAOMI 18 FOLD <span>/</span> DUO OPENING</p>
-            <h1>像一块屏幕，<em>展开成两块。</em></h1>
-            <p class="lede">一个以 iPhone Duo 为灵感的折叠屏打开动画概念。点击重新播放，观察铰链、屏幕内容和光线如何一起完成展开。</p>
+            <p class="kicker">XIAOMI 18 FOLD <span>/</span> LEFT-SWING GLASS</p>
+            <h1>向左一掀，<em>透明感随铰链展开。</em></h1>
+            <p class="lede">一个以 iPhone Duo 为灵感的向左开启动画概念。点击重新播放，观察透明屏幕、玻璃拖影和铰链光束如何一起完成展开。</p>
             <div class="actions">
               <button class="primary-button" id="replay" type="button"><span class="play-icon">↻</span> 重新播放</button>
               <button class="secondary-button" id="auto-toggle" type="button" aria-pressed="true">自动循环 <span class="toggle on"><i></i></span></button>
             </div>
             <div class="spec-row">
-              <div><span>MODE</span><strong>DUO / OPEN</strong></div>
-              <div><span>ORIGIN</span><strong>HINGE 01</strong></div>
+              <div><span>MODE</span><strong>LEFT-SWING</strong></div>
+              <div><span>ORIGIN</span><strong>GLASS HINGE</strong></div>
               <div><span>STATUS</span><strong id="status">OPENING</strong></div>
             </div>
           </div>
@@ -39,6 +39,9 @@
             <div class="stage-glow"></div>
             <div class="device-shadow"></div>
             <div class="device" id="device">
+              <div class="glass-ghost ghost-one"></div>
+              <div class="glass-ghost ghost-two"></div>
+              <div class="glass-sweep"></div>
               <div class="panel panel-left">
                 <div class="screen">
                   <div class="screen-top"><span>09:41</span><span class="signal">▮▮▮ 5G</span></div>
@@ -60,19 +63,19 @@
               <div class="hinge"><span></span></div>
               <div class="device-edge"></div>
             </div>
-            <div class="stage-caption"><span class="caption-line"></span><span id="caption">UNFOLDING DISPLAY</span><span class="caption-line"></span></div>
+            <div class="stage-caption"><span class="caption-line"></span><span id="caption">LEFT-SWING DISPLAY</span><span class="caption-line"></span></div>
           </div>
         </section>
 
         <section class="timeline" aria-label="动画状态">
-          <div class="timeline-head"><span>OPENING SEQUENCE</span><span id="progress-label">00 / 03</span></div>
+          <div class="timeline-head"><span>LEFT OPENING SEQUENCE</span><span id="progress-label">00 / 03</span></div>
           <div class="progress"><i id="progress-bar"></i></div>
-          <div class="timeline-steps"><span class="active">FOLD</span><span>HINGE</span><span>DUO</span></div>
+          <div class="timeline-steps"><span class="active">CLOSED</span><span>LEFT SWING</span><span>DUO</span></div>
         </section>
 
         <section class="notes">
-          <div class="note-card"><span class="note-index">01</span><div><h2>打开，不只是变大。</h2><p>左侧锁屏和右侧信息面板在展开时错峰出现，让铰链动作成为视觉焦点。</p></div></div>
-          <div class="note-card"><span class="note-index">02</span><div><h2>为触摸屏保留呼吸感。</h2><p>整个演示使用 CSS 3D 和原生 JavaScript，没有图片依赖，适合继续改造成产品原型。</p></div></div>
+          <div class="note-card"><span class="note-index">01</span><div><h2>向左打开，不只是变大。</h2><p>右侧屏幕绕着左侧铰链向左掀开，透明拖影把运动路径留在空气里。</p></div></div>
+          <div class="note-card"><span class="note-index">02</span><div><h2>透明，不只是降低不透明度。</h2><p>玻璃高光、透视和错峰内容都由 CSS 3D 与原生 JavaScript 完成，没有图片依赖。</p></div></div>
         </section>
       </main>
 

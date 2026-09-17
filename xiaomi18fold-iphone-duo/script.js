@@ -15,7 +15,7 @@ let startedAt = 0;
 function setStep(progress) {
   const index = progress < 0.36 ? 0 : progress < 0.72 ? 1 : 2;
   steps.forEach((step, stepIndex) => step.classList.toggle("active", stepIndex === index));
-  const labels = ["FOLDING DEVICE", "HINGE ALIGNMENT", "DUO DISPLAY"];
+  const labels = ["CLOSED DEVICE", "LEFT-SWING GLASS", "DUO DISPLAY"];
   caption.textContent = labels[index];
   status.textContent = index === 2 ? "READY" : "OPENING";
   progressLabel.textContent = `${String(index).padStart(2, "0")} / 03`;

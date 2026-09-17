@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080d18" />
+    <meta name="description" content="Codex 前端实验室：用于展示和测试由 Codex 构建的前端项目。" />
+    <title>Codex 前端实验室 · Kevinsamer</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="Codex 前端实验室首页"><span class="brand-mark">&lt;/&gt;</span><span>Codex 前端实验室</span></a>
+        <a class="github-link" href="https://github.com/Kevinsamer" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </header>
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow">KEVINSAMER · FRONTEND LAB</p>
+            <h1 id="hero-title">把每个想法，<span>变成可访问的体验。</span></h1>
+            <p class="hero-description">这里是我的 Codex 前端实验室。每个项目独立构建、自动部署，用手机或平板就能随时打开最新测试版本。</p>
+            <div class="hero-actions"><a class="button button-primary" href="#projects">浏览实验项目 <span>↓</span></a><a class="button button-quiet" href="https://github.com/Kevinsamer" target="_blank" rel="noreferrer">查看 GitHub ↗</a></div>
+          </div>
+          <div class="hero-orbit" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core"><span>&lt;</span>CODEX<span>/&gt;</span></div><i class="dot dot-one"></i><i class="dot dot-two"></i><i class="dot dot-three"></i></div>
+        </section>
+        <section class="metrics" aria-label="实验室概况"><div><strong>01</strong><span>独立入口</span></div><div><strong>∞</strong><span>持续实验</span></div><div><strong>24/7</strong><span>在线预览</span></div></section>
+        <section class="section-block" id="projects" aria-labelledby="projects-title">
+          <div class="section-heading"><div><p class="eyebrow">PROJECT INDEX</p><h2 id="projects-title">实验项目</h2></div><span class="section-note">只展示已发布项目</span></div>
+          <div class="empty-projects"><div class="empty-icon">✦</div><h3>新的实验即将开始</h3><p>当前首页暂不放入旧项目。之后每个独立仓库发布成功后，再把它添加到这里，形成清晰的项目导航。</p><div class="empty-path"><span>https://kevinsamer.github.io/</span><b>+</b><span>your-project</span></div></div>
+        </section>
+        <section class="section-block workflow-section" aria-labelledby="workflow-title">
+          <div class="section-heading"><div><p class="eyebrow">SHIPPING LOOP</p><h2 id="workflow-title">从想法到在线预览</h2></div></div>
+          <div class="workflow"><article><small>01</small><h3>Codex 构建</h3><p>快速迭代界面与交互，把想法变成可运行的前端项目。</p></article><i></i><article><small>02</small><h3>Push 到 GitHub</h3><p>每个项目保持独立仓库，代码、版本和部署记录清晰可追溯。</p></article><i></i><article><small>03</small><h3>自动发布 Pages</h3><p>GitHub Actions 自动部署，手机打开链接即可测试最新版。</p></article></div>
+        </section>
+        <section class="principles" aria-label="部署原则"><div><b>STATIC-FIRST</b><p>HTML、CSS、JavaScript 和构建后的前端静态文件都可以发布。</p></div><div><b>API-READY</b><p>前端可以请求外部 HTTPS API，密钥和服务端逻辑留在后端。</p></div><div><b>PATH-AWARE</b><p>Project Pages 使用子路径，Vite 项目按仓库名配置 base。</p></div></section>
+      </main>
+      <footer class="site-footer"><span>© <span id="year"></span> Kevinsamer</span><span>Built with curiosity &amp; Codex</span></footer>
+    </div>
+  </body>
+</html>

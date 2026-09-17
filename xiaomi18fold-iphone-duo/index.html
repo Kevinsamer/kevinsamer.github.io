@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#080b12" />
-    <meta name="description" content="小米 18 Fold · iPhone Duo-inspired 打开屏幕动画概念演示。" />
-    <title>Xiaomi 18 Fold · Duo Opening Study</title>
+    <meta name="theme-color" content="#05070b" />
+    <meta name="description" content="小米 18 Fold 可交互开合动画概念演示。" />
+    <title>Xiaomi 18 Fold · Opening Study</title>
     <link rel="stylesheet" href="./styles.css" />
     <script defer src="./script.js"></script>
   </head>
@@ -15,40 +15,32 @@
     <div class="demo-shell">
       <header class="demo-header">
         <a class="back-link" href="../"><span>←</span> Codex 前端实验室</a>
-        <div class="demo-label"><span class="live-dot"></span>INTERACTION STUDY</div>
+        <div class="demo-label"><span class="live-dot"></span>INTERACTION STUDY · 02</div>
       </header>
 
       <main>
         <section class="intro">
           <div class="intro-copy">
-            <p class="kicker">XIAOMI 18 FOLD <span>/</span> LEFT-SWING GLASS</p>
-            <h1>向左一掀，<em>透明感随铰链展开。</em></h1>
-            <p class="lede">一个以 iPhone Duo 为灵感的向左开启动画概念。点击重新播放，观察透明屏幕、玻璃拖影和铰链光束如何一起完成展开。</p>
+            <p class="kicker">XIAOMI 18 FOLD <span>/</span> CONTINUOUS HINGE</p>
+            <h1>指尖轻推，<em>屏幕随你展开。</em></h1>
+            <p class="lede">从合拢到完全展开，每一度都能停留。拖动手机或下方控制条，感受铰链阻尼、屏幕景深与光影同步变化。</p>
             <div class="actions">
-              <button class="primary-button" id="replay" type="button"><span class="play-icon">↻</span> 重新播放</button>
-              <button class="secondary-button" id="auto-toggle" type="button" aria-pressed="true">自动循环 <span class="toggle on"><i></i></span></button>
+              <button class="primary-button" id="replay" type="button"><span class="play-icon">↻</span> 播放开合</button>
+              <button class="secondary-button" id="auto-toggle" type="button" aria-pressed="true">自动演示 <span class="toggle on"><i></i></span></button>
             </div>
             <div class="spec-row">
-              <div><span>MODE</span><strong>LEFT-SWING</strong></div>
-              <div><span>ORIGIN</span><strong>GLASS HINGE</strong></div>
-              <div><span>STATUS</span><strong id="status">OPENING</strong></div>
+              <div><span>MODE</span><strong>DIRECT MANIPULATION</strong></div>
+              <div><span>HINGE</span><strong id="angle-readout">120°</strong></div>
+              <div><span>STATUS</span><strong id="status">FLEX</strong></div>
             </div>
           </div>
 
-          <div class="device-stage" aria-label="小米 18 Fold 打开屏幕动画">
+          <div class="device-stage" id="device-stage" aria-label="可拖动的小米 18 Fold 开合动画">
             <div class="stage-glow"></div>
             <div class="device-shadow"></div>
             <div class="device" id="device">
-              <div class="glass-ghost ghost-one"></div>
-              <div class="glass-ghost ghost-two"></div>
-              <div class="glass-sweep"></div>
-              <div class="panel panel-left">
-                <div class="screen">
-                  <div class="screen-top"><span>09:41</span><span class="signal">▮▮▮ 5G</span></div>
-                  <div class="lock-copy"><small>星期三，9月18日</small><strong>09:41</strong></div>
-                  <div class="screen-bottom"><span>◌</span><span>⌁</span></div>
-                </div>
-              </div>
+              <div class="fold-echo echo-one"></div>
+              <div class="fold-echo echo-two"></div>
               <div class="panel panel-right">
                 <div class="screen screen-right">
                   <div class="screen-top"><span>DUO</span><span>100%</span></div>
@@ -60,22 +52,34 @@
                   <div class="screen-bottom"><span>⌂</span><span>○</span></div>
                 </div>
               </div>
+              <div class="panel panel-left">
+                <div class="outer-shell" aria-hidden="true"><span class="camera"></span><b>MI</b></div>
+                <div class="screen">
+                  <div class="screen-top"><span>09:41</span><span class="signal">▮▮▮ 5G</span></div>
+                  <div class="lock-copy"><small>星期三，9月18日</small><strong>09:41</strong></div>
+                  <div class="screen-bottom"><span>◌</span><span>⌁</span></div>
+                </div>
+              </div>
               <div class="hinge"><span></span></div>
-              <div class="device-edge"></div>
+              <div class="crease-light"></div>
             </div>
-            <div class="stage-caption"><span class="caption-line"></span><span id="caption">LEFT-SWING DISPLAY</span><span class="caption-line"></span></div>
+            <div class="drag-hint"><span>↔</span> 直接拖动手机</div>
+            <div class="stage-caption"><span class="caption-line"></span><span id="caption">FLEX MODE</span><span class="caption-line"></span></div>
           </div>
         </section>
 
-        <section class="timeline" aria-label="动画状态">
-          <div class="timeline-head"><span>LEFT OPENING SEQUENCE</span><span id="progress-label">00 / 03</span></div>
-          <div class="progress"><i id="progress-bar"></i></div>
-          <div class="timeline-steps"><span class="active">CLOSED</span><span>LEFT SWING</span><span>DUO</span></div>
+        <section class="scrubber" aria-label="开合控制">
+          <div class="scrubber-head"><span>拖动以开合</span><span id="progress-label">67%</span></div>
+          <div class="range-wrap">
+            <input id="fold-slider" type="range" min="0" max="1" step="0.001" value="0.67" aria-label="手机开合程度" aria-valuetext="半展开" />
+            <div class="range-track"><i id="progress-bar"></i><b id="range-thumb"></b></div>
+          </div>
+          <div class="timeline-steps"><button type="button" data-detent="0">合拢</button><button type="button" data-detent="0.58" class="active">悬停</button><button type="button" data-detent="1">展开</button></div>
         </section>
 
         <section class="notes">
-          <div class="note-card"><span class="note-index">01</span><div><h2>向左打开，不只是变大。</h2><p>右侧屏幕绕着左侧铰链向左掀开，透明拖影把运动路径留在空气里。</p></div></div>
-          <div class="note-card"><span class="note-index">02</span><div><h2>透明，不只是降低不透明度。</h2><p>玻璃高光、透视和错峰内容都由 CSS 3D 与原生 JavaScript 完成，没有图片依赖。</p></div></div>
+          <div class="note-card"><span class="note-index">01</span><div><h2>运动跟手，而不是等待动画。</h2><p>手机与滑杆都能直接控制开合角度，释放后会吸附到最近的物理停点。</p></div></div>
+          <div class="note-card"><span class="note-index">02</span><div><h2>一条铰链，带动整套光影。</h2><p>屏幕透视、折痕高光、玻璃反射和地面阴影由同一连续进度驱动。</p></div></div>
         </section>
       </main>
 

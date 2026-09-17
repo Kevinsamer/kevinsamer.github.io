@@ -41,7 +41,7 @@ function render() {
   stage.style.setProperty("--glow-alpha", (0.08 + value * 0.18).toFixed(3));
   stage.style.setProperty("--shadow-width", `${35 + value * 39}%`);
   stage.style.setProperty("--shadow-alpha", (0.48 + value * 0.24).toFixed(3));
-  stage.style.setProperty("--shadow-x", `${closed * 16}%`);
+  stage.style.setProperty("--shadow-x", `${closed * -16}%`);
   stage.style.setProperty("--tilt-x", `${6 + value * 3}deg`);
   stage.style.setProperty("--tilt-z", `${-1 - value * 2}deg`);
   stage.style.setProperty("--lift", `${closed * 8}px`);

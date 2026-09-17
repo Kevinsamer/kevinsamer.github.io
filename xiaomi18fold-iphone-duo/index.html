@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="description" content="小米 18 Fold · iPhone Duo-inspired 打开屏幕动画概念演示。" />
+    <title>Xiaomi 18 Fold · Duo Opening Study</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="demo-shell">
+      <header class="demo-header">
+        <a class="back-link" href="../"><span>←</span> Codex 前端实验室</a>
+        <div class="demo-label"><span class="live-dot"></span>INTERACTION STUDY</div>
+      </header>
+
+      <main>
+        <section class="intro">
+          <div class="intro-copy">
+            <p class="kicker">XIAOMI 18 FOLD <span>/</span> DUO OPENING</p>
+            <h1>像一块屏幕，<em>展开成两块。</em></h1>
+            <p class="lede">一个以 iPhone Duo 为灵感的折叠屏打开动画概念。点击重新播放，观察铰链、屏幕内容和光线如何一起完成展开。</p>
+            <div class="actions">
+              <button class="primary-button" id="replay" type="button"><span class="play-icon">↻</span> 重新播放</button>
+              <button class="secondary-button" id="auto-toggle" type="button" aria-pressed="true">自动循环 <span class="toggle on"><i></i></span></button>
+            </div>
+            <div class="spec-row">
+              <div><span>MODE</span><strong>DUO / OPEN</strong></div>
+              <div><span>ORIGIN</span><strong>HINGE 01</strong></div>
+              <div><span>STATUS</span><strong id="status">OPENING</strong></div>
+            </div>
+          </div>
+
+          <div class="device-stage" aria-label="小米 18 Fold 打开屏幕动画">
+            <div class="stage-glow"></div>
+            <div class="device-shadow"></div>
+            <div class="device" id="device">
+              <div class="panel panel-left">
+                <div class="screen">
+                  <div class="screen-top"><span>09:41</span><span class="signal">▮▮▮ 5G</span></div>
+                  <div class="lock-copy"><small>星期三，9月18日</small><strong>09:41</strong></div>
+                  <div class="screen-bottom"><span>◌</span><span>⌁</span></div>
+                </div>
+              </div>
+              <div class="panel panel-right">
+                <div class="screen screen-right">
+                  <div class="screen-top"><span>DUO</span><span>100%</span></div>
+                  <div class="right-content">
+                    <div class="duo-orb"><span>18</span></div>
+                    <p>展开<br /><b>更多可能</b></p>
+                    <div class="mini-widget"><span>WED</span><strong>18</strong><small>SEP</small></div>
+                  </div>
+                  <div class="screen-bottom"><span>⌂</span><span>○</span></div>
+                </div>
+              </div>
+              <div class="hinge"><span></span></div>
+              <div class="device-edge"></div>
+            </div>
+            <div class="stage-caption"><span class="caption-line"></span><span id="caption">UNFOLDING DISPLAY</span><span class="caption-line"></span></div>
+          </div>
+        </section>
+
+        <section class="timeline" aria-label="动画状态">
+          <div class="timeline-head"><span>OPENING SEQUENCE</span><span id="progress-label">00 / 03</span></div>
+          <div class="progress"><i id="progress-bar"></i></div>
+          <div class="timeline-steps"><span class="active">FOLD</span><span>HINGE</span><span>DUO</span></div>
+        </section>
+
+        <section class="notes">
+          <div class="note-card"><span class="note-index">01</span><div><h2>打开，不只是变大。</h2><p>左侧锁屏和右侧信息面板在展开时错峰出现，让铰链动作成为视觉焦点。</p></div></div>
+          <div class="note-card"><span class="note-index">02</span><div><h2>为触摸屏保留呼吸感。</h2><p>整个演示使用 CSS 3D 和原生 JavaScript，没有图片依赖，适合继续改造成产品原型。</p></div></div>
+        </section>
+      </main>
+
+      <footer class="demo-footer"><span>CONCEPT PROTOTYPE · NOT AN OFFICIAL XIAOMI OR APPLE PRODUCT</span><span>Built with Codex</span></footer>
+    </div>
+  </body>
+</html>

@@ -31,4 +31,5 @@
 
 .team-power strong{position:relative;z-index:1}
 
-#game.scene-pannable{touch-action:none}
+#game.scene-pannable{touch-action:none;user-select:none;-webkit-user-select:none}
+#game.scene-pannable img,#game.scene-pannable canvas{-webkit-user-drag:none}

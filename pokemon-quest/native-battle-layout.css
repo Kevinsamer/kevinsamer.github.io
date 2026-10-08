@@ -39,3 +39,12 @@
 .native-battle-hud .skill-card[data-team-index="2"] .native-battle-hp-frame{position:absolute;left:146.666667px;top:0.000000px;width:106.666667px;height:33.333333px;border-style:solid;border-color:transparent;border-width:14.000000px 14.000000px 14.000000px 14.000000px;border-image:url("assets/original/ui-tinted/window_plane_cornerwaku_58_134_210_255.png") 21.0 21.0 21.0 21.0 fill stretch;pointer-events:none;box-sizing:border-box}
 .native-battle-hud .native-stones .native-battle-drop-frame{position:absolute;left:0.000000px;top:0.000000px;width:126.666667px;height:53.333333px;border-style:solid;border-color:transparent;border-width:14.000000px 14.000000px 14.000000px 14.000000px;border-image:url("assets/original/ui-tinted/window_plane_cornerwaku_mini_255_255_255_255.png") 21.0 21.0 21.0 21.0 fill stretch;pointer-events:none;box-sizing:border-box}
 .native-battle-hud .native-food .native-battle-drop-frame{position:absolute;left:0.000000px;top:0.000000px;width:126.666667px;height:53.333333px;border-style:solid;border-color:transparent;border-width:14.000000px 14.000000px 14.000000px 14.000000px;border-image:url("assets/original/ui-tinted/window_plane_cornerwaku_mini_255_255_255_255.png") 21.0 21.0 21.0 21.0 fill stretch;pointer-events:none;box-sizing:border-box}
+
+/* Canvas_battle/Button_all/auto_cover: window_plane 3000x260.
+   Source in/out clips: 0.25s, group anchored Y -120 <-> 145, alpha 0 <-> 120/255.
+   At shown endpoint the rect is [-540,855,3000,260] in the 1920x1080 canvas. */
+.native-battle-hud .native-auto-cover{position:absolute;left:-360px;top:570px;width:2000px;height:173.333333px;background:rgb(0 0 0 / .470588237);z-index:10;pointer-events:none;transform:translateY(176.666667px);opacity:0}
+.native-battle-hud .native-auto-cover.leaving{animation:native-auto-cover-out .25s both}
+.native-battle-hud .native-auto-cover.active{pointer-events:auto;animation:native-auto-cover-in .25s both}
+@keyframes native-auto-cover-in{from{transform:translateY(176.666667px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes native-auto-cover-out{from{transform:translateY(0);opacity:1}to{transform:translateY(176.666667px);opacity:0}}

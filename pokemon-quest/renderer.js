@@ -1,55 +1,17 @@
 import {drawOriginalActorPortrait} from './native-actor-portraits.js';
 import {originalImage,INGREDIENT_SPRITES} from './original-images.js';
-// Original 3D portraits when ready; procedural bodies are a temporary loading fallback.
+// Original 3D portraits only; pending assets have a neutral loading label.
 const shade=(hex,k)=>{let h=String(hex||'#efb651'),parts=h.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)/),rgb;if(parts)rgb=parts.slice(1).map(Number);else{h=h.replace('#','');if(h.length===3)h=h.split('').map(v=>v+v).join('');const n=parseInt(h,16);rgb=[n>>16,(n>>8)&255,n&255];}return 'rgb('+rgb.map(v=>Math.max(0,Math.min(255,v*k))|0).join(',')+')';};
 function poly(c,p,color){c.beginPath();p.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fillStyle=color;c.fill();}
 function cube(c,x,y,w,h,d,color){poly(c,[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],color);poly(c,[[x+w,y],[x+w+d,y-d*.55],[x+w+d,y+h-d*.55],[x+w,y+h]],shade(color,.73));poly(c,[[x,y],[x+d,y-d*.55],[x+w+d,y-d*.55],[x+w,y]],shade(color,1.17));}
 function ellipse(c,x,y,rx,ry,color){c.fillStyle=color;c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fill();}
 export function drawMonster(ctx,x,y,size,species={},opts={}){
  if(drawOriginalActorPortrait(ctx,species,x,y,size,{shiny:!!opts.shiny}))return;
- const c=ctx,seed=Number(species.dex)||String(species.id||species.name||'').split('').reduce((a,b)=>a+b.charCodeAt(0),0),t=opts.time||0;
- const types=species.types||String(species.type||'normal').split('/'),has=(a)=>types.some(v=>a.includes(v)),evolved=!!species.evolveFrom,grown=Number(species.evolveLevel||species.evolutionLevel||0)>=30;
- const specific={7:'shell',8:'shell',9:'shell',23:'serpent',24:'serpent',95:'serpent',129:'aquatic',130:'serpent',131:'shell',137:'machine',138:'shell',139:'shell',140:'shell',141:'beetle',147:'serpent',148:'serpent',149:'dragon',6:'dragon',142:'dragon',81:'machine',82:'machine',100:'machine',101:'machine',132:'ghost',143:'brute'};
- let form=specific[seed]||(has(['幽灵','ghost'])?'ghost':has(['龙','dragon'])?'dragon':has(['虫','bug'])?'beetle':has(['飞行','flying'])?'bird':has(['草','grass'])?'plant':has(['岩石','rock','地面','ground'])?'rock':has(['水','water'])?'aquatic':has(['格斗','fighting'])?'brute':has(['超能力','psychic'])?'oracle':has(['电','electric'])?'quadruped':has(['火','fire'])?(seed%2?'biped':'quadruped'):['quadruped','biped','brute'][seed%3]);
- let base=species.color||'#86bea3',light=shade(base,1.12),dark=shade(base,.76),cream='#fff0c5',ink='#283b45';
- // A stable species-specific tint plus pattern keeps the 151 designs distinct.
- const n=parseInt(base.replace('#',''),16);if(Number.isFinite(n)){const shift=(seed%9-4)*4;base='#'+[Math.max(30,Math.min(244,(n>>16)+shift)),Math.max(30,Math.min(244,((n>>8)&255)-shift)),Math.max(30,Math.min(244,(n&255)+(seed%5-2)*5))].map(v=>v.toString(16).padStart(2,'0')).join('');light=shade(base,1.12);dark=shade(base,.76);}
- c.save();c.translate(x,y);if(opts.flip)c.scale(-1,1);c.scale(size/64,size/64);ellipse(c,7,25,form==='serpent'?35:27,8,'rgba(31,46,48,.23)');c.translate(0,Math.sin(t*(form==='ghost'?1.5:3)+seed)*1.4);
- const block=(px,py,w,h,d=8,col=base)=>cube(c,px,py,w,h,d,col);
- let fx=0,fy=-16,fw=36,fh=29;
- if(form==='quadruped'){
-  block(-24,-3,44,22,12);for(const [px,py] of [[-23,13],[-9,18],[17,12],[29,7]])block(px,py,8,13,5,dark);block(19,-9,19,12,7);block(28,-21,8,18,6);block(-31,-28,30,31,11);fx=-16;fy=-16;fw=25;
-  if(seed%2)block(-29,-44,8,19,5);else poly(c,[[-29,-26],[-34,-43],[-15,-29]],cream);block(-9,-42,7,16,5);
-  if(evolved){block(-18,-8,7,23,5,cream);block(2,-6,7,18,5,cream);}
- }else if(form==='bird'){
-  c.translate(0,-5);block(-15,-9,29,29,11);poly(c,[[-11,-5],[-45,-23],[-38,2],[-20,12]],base);poly(c,[[17,-5],[43,-26],[44,-5],[24,12]],base);block(-13,-36,27,24,9);block(-8,18,6,12,4,'#e6be69');block(11,18,6,12,4,'#e6be69');poly(c,[[-7,-12],[0,-3],[10,-12]],'#efc45e');fx=0;fy=-26;fw=24;fh=21;block(-1,-48,8,12,6,cream);if(grown)block(-12,-46,8,12,5,cream);
- }else if(form==='aquatic'){
-  block(-23,-5,45,25,13);block(-22,-29,40,29,13);poly(c,[[25,-1],[43,-17],[43,18],[25,12]],base);poly(c,[[-19,8],[-38,13],[-27,23],[-12,20]],dark);poly(c,[[4,-30],[8,-46],[22,-31]],cream);fx=-3;fy=-18;fw=33;block(-19,7,33,5,7,cream);if(evolved)block(-23,-9,8,9,6,cream);
- }else if(form==='serpent'){
-  for(let j=4;j>=0;j--)block(-30+j*13,9+Math.sin(j*1.3)*8,17,15,9,j%2?base:cream);block(-19,-9,20,30,10);block(-22,-32,32,27,12);fx=-6;fy=-20;fw=28;poly(c,[[-15,-32],[-16,-44],[-4,-33]],cream);if(grown){block(3,-28,9,11,6,cream);block(-29,-29,8,11,5,cream);}
- }else if(form==='beetle'){
-  for(let side of [-1,1])for(let j=0;j<3;j++)block(side<0?-32:22,-3+j*9,14,5,5,dark);block(-24,-10,47,33,14,dark);block(-21,-16,39,30,13);block(-16,-34,29,25,8);fx=-1;fy=-25;fw=25;fh=22;block(-11,-48,4,17,4,ink);block(10,-48,4,17,4,ink);block(-3,-9,4,26,4,cream);if(evolved){poly(c,[[-17,-5],[-42,-35],[-44,-7],[-24,8]],'#e4e7c9');poly(c,[[20,-5],[42,-35],[44,-7],[27,8]],'#e4e7c9');}
- }else if(form==='ghost'){
-  c.translate(0,-7);poly(c,[[-28,-24],[-14,-42],[17,-38],[31,-20],[25,16],[9,9],[0,21],[-12,10],[-27,16]],base);block(-23,-28,43,30,10);block(-38,-4,12,10,7);block(29,-9,12,10,7);fx=-1;fy=-18;fw=36;block(-7,-8,13,6,4,ink);if(grown){poly(c,[[-27,-24],[-38,-41],[-16,-33]],base);poly(c,[[21,-28],[35,-44],[32,-17]],base);}
- }else if(form==='plant'){
-  block(-19,0,33,22,12,dark);block(-25,19,13,8,7);block(13,19,13,8,7);block(-22,-28,39,33,10);fx=-2;fy=-17;fw=33;block(-5,-49,7,24,5,'#719358');poly(c,[[-2,-38],[-30,-49],[-24,-32],[-2,-26]],'#93b760');poly(c,[[0,-36],[28,-54],[31,-36],[9,-27]],'#6fa662');if(evolved){block(-14,-52,25,12,10,cream);block(-7,-59,12,8,7,'#de9d8c');}if(grown){block(-27,-48,13,11,8,cream);block(13,-47,13,11,8,cream);}
- }else if(form==='shell'){
-  block(-25,-8,47,32,16,dark);block(-19,-18,34,23,15,cream);block(-11,-22,18,18,10,base);for(const [px,py]of[[-29,15],[18,15],[-13,24],[30,4]])block(px,py,12,9,7);block(-31,-27,30,28,9);fx=-16;fy=-16;fw=25;if(grown){block(15,-33,9,25,7,cream);block(28,-29,9,22,7,cream);}block(-28,-2,24,6,4,cream);
- }else if(form==='rock'){
-  block(-29,7,19,19,11,dark);block(13,8,21,17,12,dark);block(-22,-16,43,36,14);block(-15,-35,28,27,13,light);block(-36,-14,15,17,9);block(27,-18,14,17,9);fx=-1;fy=-22;fw=26;fh=23;block(-9,-44,15,9,9,cream);if(grown){block(-28,-28,14,12,10,cream);block(20,-31,12,17,10,cream);}
- }else if(form==='machine'){
-  block(-27,-26,48,45,17,'#94b2b4');block(-20,-21,35,28,10,base);block(-36,-12,10,22,6,'#e7ce83');block(30,-14,10,22,6,'#e7ce83');block(-9,17,11,10,7,ink);block(10,17,11,10,7,ink);block(-5,-43,6,17,5,'#7d8e94');block(-10,-48,16,8,6,cream);fx=-2;fy=-9;fw=31;fh=26;block(-7,5,11,4,3,cream);if(evolved){block(-33,-30,9,12,7,cream);block(26,-32,10,12,7,cream);}
- }else if(form==='dragon'){
-  poly(c,[[-17,-2],[-47,-28],[-43,9],[-22,15]],dark);poly(c,[[17,-6],[42,-34],[46,4],[22,17]],dark);block(-19,-6,34,30,13);block(-25,19,15,10,7);block(12,19,15,10,7);block(25,9,15,9,8);block(36,2,9,12,6);block(-21,-37,35,31,13);block(-10,-46,7,14,6,cream);block(12,-48,7,15,6,cream);fx=-3;fy=-23;fw=30;block(-7,-2,17,21,5,cream);
- }else if(form==='oracle'){
-  block(-12,-1,22,24,10);block(-23,18,14,8,7);block(10,18,14,8,7);block(-26,-32,45,34,13);block(-38,0,14,9,7);block(27,0,14,9,7);fx=-3;fy=-21;fw=38;poly(c,[[-6,-33],[0,-48],[9,-32],[1,-20]],cream);block(18,8,18,7,8);block(28,-3,8,17,6);if(evolved)poly(c,[[-26,-28],[-36,-42],[-33,-15]],base);
- }else{
-  const wide=form==='brute';block(wide?-25:-16,-3,wide?46:30,29,12);block(-25,19,16,10,8);block(11,19,16,10,8);block(wide?-39:-30,-3,wide?15:11,20,8);block(wide?31:23,-5,wide?15:11,20,8);block(-24,-34,42,33,13);fx=-3;fy=-22;fw=34;block(-8,2,17,17,5,cream);if(seed%2){block(-22,-49,8,18,6);block(11,-48,8,16,6);}else{poly(c,[[-21,-34],[-27,-48],[-11,-35]],cream);poly(c,[[8,-34],[22,-50],[20,-30]],cream);}if(grown)block(-26,-9,44,7,7,cream);
- }
- // Different gaze and brows, all at a readable miniature scale.
- const gap=fw*.24,ey=fy-2,pupil=seed%3===0?3:4;c.fillStyle='#fff7df';c.fillRect(fx-gap-5,ey,9,10);c.fillRect(fx+gap-3,ey,9,10);c.fillStyle=ink;c.fillRect(fx-gap-3+(seed%2),ey+2,pupil,6);c.fillRect(fx+gap-1+(seed%2),ey+2,pupil,6);if(evolved){c.fillRect(fx-gap-6,ey-3,11,2);c.fillRect(fx+gap-4,ey-3,11,2);}c.fillRect(fx-4,fy+12,8,3);c.fillStyle=cream;c.fillRect(fx-2,fy+12,3,2);
- if(seed%4===0){c.fillStyle='#e5a28f';c.fillRect(fx-gap-9,fy+10,5,3);c.fillRect(fx+gap+7,fy+10,5,3);}else{c.fillStyle=cream;c.fillRect(fx-gap-9,fy+9,3,3);}
- if(opts.hurt){c.globalAlpha=.45;c.fillStyle='#ffffff';c.fillRect(fx-fw*.55,fy-20,fw+8,36);}c.restore();
+ // Never substitute an unrelated procedural creature while its original model loads.
+ ctx.save();ctx.fillStyle='#6d786e';ctx.font=`${Math.max(10,Math.round(size*.12))}px system-ui`;ctx.textAlign='center';ctx.fillText('加载中…',x,y-size*.3);ctx.restore();
+}
+export function drawSceneLoading(ctx,width,height){
+ ctx.clearRect(0,0,width,height);ctx.save();ctx.fillStyle='#e8e6d3';ctx.fillRect(0,0,width,height);ctx.fillStyle='#596c60';ctx.font='20px system-ui';ctx.textAlign='center';ctx.fillText('场景加载中…',width/2,height/2);ctx.restore();
 }
 function tile(c,x,y,w,h,height,top){poly(c,[[x-w/2,y],[x,y+h/2],[x+w/2,y],[x,y-h/2]],top);poly(c,[[x-w/2,y],[x,y+h/2],[x,y+h/2+height],[x-w/2,y+height]],'#beae7c');poly(c,[[x,y+h/2],[x+w/2,y],[x+w/2,y+height],[x,y+h/2+height]],'#a09366');}
 function tree(c,x,y,s=1){c.save();c.translate(x,y);c.scale(s,s);ellipse(c,4,11,28,10,'rgba(59,88,53,.13)');cube(c,-5,-24,10,33,8,'#9f8556');cube(c,-23,-56,42,24,20,'#6c9854');cube(c,-18,-74,32,22,17,'#82ad61');cube(c,-11,-89,19,20,13,'#9abb70');c.restore();}
@@ -103,12 +65,13 @@ function drawStatuses(c,x,y,size,u,time){const s=u.statuses||{},labels={asleep:'
 function pickupGlyph(c,x,y,p,scale=1){const native=originalImage(p.type==='stone'?`UI_Pstone_${(p.stoneKind||p.stone?.kind)==='hp'?'defense':'attack'}_${({normal:1,bronze:2,silver:3,gold:4}[p.rarity]||1)}_1`:INGREDIENT_SPRITES[p.ingredientId||p.itemId||p.item]);if(native){c.drawImage(native,x-15*scale,y-15*scale,30*scale,30*scale);return;}c.save();c.translate(x,y);c.scale(scale,scale);const id=p.ingredientId||p.itemId||p.item||'';const stone=p.kind==='stone'||p.type==='stone'||p.type==='moveStone';const color=stone?(p.type==='moveStone'?'#e9c75d':p.stoneKind==='hp'||p.stone?.kind==='hp'?'#7ea9cf':'#e2a072'):({'tiny-mushroom':'#dd8670','big-root':'#dd8670','bluk-berry':'#6aabc6','icy-rock':'#86c3d2',apricorn:'#e7c15b',honey:'#efcf72',fossil:'#bac1b3','balm-mushroom':'#b7b4c1','rainbow-matter':'#c5a5d2','mystical-shell':'#d3a7c6'}[id]||p.color||'#e3c67e');
  ellipse(c,3,9,10,3,'rgba(54,74,54,.2)');if(stone){poly(c,[[-9,0],[-3,-10],[7,-10],[12,0],[4,10]],shade(color,.75));poly(c,[[-9,0],[-3,-10],[7,-10],[3,0]],shade(color,1.2));poly(c,[[-9,0],[3,0],[4,10]],color);c.fillStyle='#fff4dc';c.fillRect(-1,-5,4,4);}else if(id.includes('mushroom')){cube(c,-3,0,5,8,4,'#e9dfb7');cube(c,-9,-7,16,9,7,color);c.fillStyle='#ffe9c5';c.fillRect(-5,-5,3,3);c.fillRect(2,-3,3,3);}else if(id==='bluk-berry'){cube(c,-7,-4,12,12,7,color);cube(c,-2,-9,5,6,4,'#88b36d');}else if(id==='big-root'){cube(c,-4,-7,7,17,6,color);cube(c,-10,-1,6,7,4,color);cube(c,2,-5,7,6,4,color);}else if(id==='mystical-shell'){for(let i=0;i<3;i++)cube(c,-8+i*5,-5+i*2,5,12-i*2,5,color);}else{cube(c,-7,-5,13,13,7,color);cube(c,-3,-9,6,5,5,shade(color,1.2));}c.restore();}
 export function drawScene(ctx,width,height,{mode='camp',game={},battle={},time=0,species=[],region,nativeGround=false,project,battleProject}={}){const c=ctx;c.save();c.clearRect(0,0,width,height);c.scale(width/1000,height/600);const b=battle||{};
+ if(!nativeGround){c.restore();drawSceneLoading(ctx,width,height);return;}
  if(mode==='map'){c.restore();drawMap(ctx,width,height,{game,time});return;}
  const theme=mode==='battle'?themeFor(region,b):{key:'grass',colors:THEMES.grass};let travel=mode==='battle'?(b.travel??b.distance??Math.max(0,(b.wave||1)-1)*93)+((b.status==='walking'||b.phase==='travel')?time*20:0):0;if(!nativeGround)terrain(c,theme,time,travel,mode!=='battle');
  if(mode==='battle'){
   const unitPoint=u=>{if(nativeGround){const p=battleProject?.(u.x??500,u.y??330,width,height,u.worldY||0);if(p)return[p.x/width*1000,p.y/height*600]}return[90+(u.x??500)*.82,115+(u.y??330)*.64]};
   for(const p of b.loot||b.pickups||[]){const [x,y]=unitPoint(p),allies=(b.units||[]).filter(u=>!u.isEnemy&&u.hp>0),target=allies.length?allies.reduce((a,u)=>Math.hypot(u.x-p.x,u.y-p.y)<Math.hypot(a.x-p.x,a.y-p.y)?u:a):null;c.save();if(target){const [tx,ty]=unitPoint(target),d=Math.hypot(tx-x,ty-y)||1;for(let i=1;i<=3;i++){c.globalAlpha=.27/i;c.fillStyle='#fff3b1';c.fillRect(x+(x-tx)/d*i*7-2,y+(y-ty)/d*i*7-4,4,4);}}c.globalAlpha=1;pickupGlyph(c,x,y-7+Math.sin(time*7+Number(p.x))*.9,p,p.type==='stone'?1.15:1);if(p.amount>1){c.font='bold 11px system-ui';c.fillStyle='#fff8d9';c.strokeStyle='#59685a';c.lineWidth=2;c.strokeText('×'+p.amount,x+9,y-13);c.fillText('×'+p.amount,x+9,y-13);}c.restore();}
-  for(const u of [...(b.units||[])].sort((a,b)=>a.y-b.y)){if(u.hp<=0){if((u.revive||u.reviveTimer||u.recovery)>0){const [x,y]=unitPoint(u);c.save();c.globalAlpha=.28;if(!u.nativeActorRendered)drawMonster(c,x,y,50,findSpecies(species,u.speciesId));c.restore();c.fillStyle='#536b6c';c.font='bold 13px system-ui';c.textAlign='center';c.fillText(Math.ceil(u.revive||u.reviveTimer||u.recovery)+'s',x,y-43);c.strokeStyle='#e3e8c5';c.lineWidth=3;c.beginPath();c.ellipse(x+3,y+19,25,8,0,0,Math.PI*2);c.stroke();}continue;}const [x,y]=unitPoint(u),sp=u.species||findSpecies(species,u.speciesId),size=u.isBoss?86:u.isEnemy?48:60;if(!u.nativeActorRendered)drawMonster(c,x,y,size,sp,{time,flip:u.isEnemy,hurt:u.hurt>0});const top=u.nativeActorRendered?battleProject?.(u.x,u.y,width,height,(u.worldY||0)+(u.nativeModelHeight||2)+.15):null,hx=top?top.x/width*1000:x,hy=top?top.y/height*600:y-size*.98;drawStatuses(c,x,y,top?Math.max(12,y-hy):size,u,time);const ratio=Math.max(0,Math.min(1,u.hp/(u.maxHp||u.hp||1)));c.fillStyle='#454e4b';c.fillRect(hx-26,hy,52,6);c.fillStyle=u.isEnemy?'#ef895c':'#87cf73';c.fillRect(hx-25,hy+1,50*ratio,4);}
+  for(const u of [...(b.units||[])].sort((a,b)=>a.y-b.y)){if(u.hp<=0){if((u.revive||u.reviveTimer||u.recovery)>0){const [x,y]=unitPoint(u);c.save();c.globalAlpha=.28;c.restore();c.fillStyle='#536b6c';c.font='bold 13px system-ui';c.textAlign='center';c.fillText(Math.ceil(u.revive||u.reviveTimer||u.recovery)+'s',x,y-43);c.strokeStyle='#e3e8c5';c.lineWidth=3;c.beginPath();c.ellipse(x+3,y+19,25,8,0,0,Math.PI*2);c.stroke();}continue;}const [x,y]=unitPoint(u),sp=u.species||findSpecies(species,u.speciesId),size=u.isBoss?86:u.isEnemy?48:60;const top=u.nativeActorRendered?battleProject?.(u.x,u.y,width,height,(u.worldY||0)+(u.nativeModelHeight||2)+.15):null,hx=top?top.x/width*1000:x,hy=top?top.y/height*600:y-size*.98;drawStatuses(c,x,y,top?Math.max(12,y-hy):size,u,time);const ratio=Math.max(0,Math.min(1,u.hp/(u.maxHp||u.hp||1)));c.fillStyle='#454e4b';c.fillRect(hx-26,hy,52,6);c.fillStyle=u.isEnemy?'#ef895c':'#87cf73';c.fillRect(hx-25,hy+1,50*ratio,4);}
   for(const e of b.effects||[]){const life=e.ttl??e.life??e.duration??.5,[x,y]=unitPoint(e);c.save();c.globalAlpha=Math.min(1,life*1.6);c.strokeStyle=e.color||'#fff6ce';c.fillStyle=e.color||'#fff6ce';c.lineWidth=e.type==='warning'?2:4;if(e.type==='warning'){ellipse(c,x,y,(e.radius||90)*.82,(e.radius||90)*.5,'rgba(231,100,70,.24)');}else{c.beginPath();c.ellipse(x,y,e.radius?e.radius*.82:9+(1-life)*30,e.radius?e.radius*.5:7+(1-life)*20,0,0,Math.PI*2);c.stroke();}if(e.text||e.damage||e.value){c.font='900 22px system-ui';c.textAlign='center';c.strokeStyle='rgba(57,62,51,.8)';c.lineWidth=3;const label=String(e.text||e.damage||e.value);c.strokeText(label,x,y-35-(1-life)*20);c.fillText(label,x,y-35-(1-life)*20);}c.restore();}
  }else if(!nativeGround){
   // Base-camp clearing, four cooking stations and a small command platform.
@@ -119,19 +82,7 @@ export function drawScene(ctx,width,height,{mode='camp',game={},battle={},time=0
   list.forEach((m,i)=>{const partner=typeof m==='object'?m:monsters.find(p=>p.uid===m);let sp=partner?.species||findSpecies(species,partner?.speciesId||partner?.dexId||m?.id||m);const x=195+(i%5)*91+Math.sin(time*.22+i)*15,y=292+Math.floor(i/5)*90+(i%2)*32+Math.cos(time*.2+i)*5;drawMonster(c,x,y,team.includes(partner?.uid)?62:52,sp,{time});});
   tree(c,75,525,1.2);tree(c,955,565,1.3);rock(c,76,390,.9);rock(c,938,207,1.1);campDecorations(c,game,time);
  }
- if(nativeGround&&mode==='camp'){(game.monsters||[]).slice(0,13).forEach((m,i)=>{const p=project?.([-9+(i%5)*4+Math.sin(time*.22+i),0,9+Math.floor(i/5)*4]);if(p?.visible&&!game.nativeCampActorUIDs?.includes(m.uid))drawMonster(c,p.x/width*1000,p.y/height*600,game.team.includes(m.uid)?52:44,findSpecies(species,m.speciesId),{time})})}
+
  c.restore();}
 // Whole Tumblecube-style island map. Region markers are supplied by the UI layer.
-export function drawMap(ctx,width,height,{time=0,game={}}={}){const c=ctx;c.save();c.clearRect(0,0,width,height);c.scale(width/1000,height/600);c.fillStyle='#79bfcb';c.fillRect(0,0,1000,600);for(let i=0;i<42;i++){c.fillStyle='#9bd2d6';c.fillRect((i*113+time*3)%1050-25,(i*59)%600,24+i%4*12,3);}
- const coast=[[113,333],[157,215],[258,186],[300,101],[447,78],[501,111],[603,69],[730,106],[756,161],[879,193],[905,304],[837,366],[841,461],[728,489],[673,551],[550,520],[451,552],[339,503],[209,466],[161,387]];
- ellipse(c,501,369,398,204,'rgba(61,116,124,.16)');poly(c,coast.map(([x,y])=>[x,y+22]),'#9f9c73');poly(c,coast,'#dacb8c');const inland=coast.map(([x,y])=>[500+(x-500)*.94,315+(y-315)*.92]);poly(c,inland,'#a5c870');c.save();poly(c,inland,'#a5c870');c.clip();
- poly(c,[[161,237],[355,164],[410,237],[320,370],[177,361]],'#97ba60');poly(c,[[282,350],[421,282],[502,416],[403,528],[260,447]],'#d4bf7d');poly(c,[[465,107],[612,78],[705,161],[647,266],[488,242]],'#9dadaa');poly(c,[[644,115],[785,163],[853,250],[699,279],[653,224]],'#cfddda');poly(c,[[670,327],[847,289],[895,438],[728,498],[620,431]],'#a79690');poly(c,[[444,390],[568,323],[676,439],[612,533],[462,540]],'#96ba7a');
- // River connects forest to lagoon with blocky bends.
- poly(c,[[394,160],[427,180],[439,240],[485,258],[494,333],[459,346],[454,278],[410,261],[406,201],[373,188]],'#83c8d2');ellipse(c,535,277,78,40,'#84c9d0');ellipse(c,535,277,58,25,'#9edbdd');
- for(let i=0;i<43;i++){let x=155+(i*109)%650,y=153+(i*71)%341;if(x>410&&x<630&&y<350)continue;if(x>640&&y<300){cube(c,x,y-17,14,20,10,'#b6c9c4');cube(c,x,y-22,14,7,10,'#e8eeea');}else if(x>666&&y>315){cube(c,x,y-20,21,24,10,'#8b8280');}else tree(c,x,y,.35+(i%3)*.08);}
- // Central monumental mountain and late-game volcanic crater.
- cube(c,470,159,64,42,35,'#858f89');cube(c,486,126,40,36,26,'#a2aaa0');cube(c,493,111,28,19,21,'#d2d7c5');cube(c,754,390,60,47,29,'#766c6b');cube(c,766,365,37,29,22,'#95827b');poly(c,[[766,365],[787,353],[825,353],[803,365]],'#e09b64');c.restore();
- // Offshore endgame island.
- tile(c,912,92,96,52,13,'#aaa5ad');cube(c,889,56,33,33,21,'#897b91');cube(c,901,37,15,22,12,'#bfaec9');c.restore();}
-
-
+export function drawMap(ctx,width,height){drawSceneLoading(ctx,width,height);}

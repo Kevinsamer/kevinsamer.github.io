@@ -1,4 +1,4 @@
-.native-stage-select{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5;touch-action:pan-x}
+#ui>.native-stage-select,.native-stage-select{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5;touch-action:pan-x}
 .native-stage-select-content{position:absolute;inset:0;pointer-events:none}
 .native-stage-select-card{position:absolute;width:246.6667px;height:186.6667px;padding:0;border:0;background:none;color:#fff;pointer-events:auto;cursor:pointer;overflow:visible;font:inherit}
 .native-stage-select-card:disabled{cursor:default;opacity:1}

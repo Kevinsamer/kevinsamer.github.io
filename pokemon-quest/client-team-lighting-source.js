@@ -1,0 +1,2 @@
+// Original scenes_customteam serialized Flat actor illumination; ground Custom/Gf/Effect is unlit.
+export const CLIENT_TEAM_LIGHTING_SOURCE={"ambientMode":3,"ambientColor":[1.0,1.0,1.0],"lights":[{"color":[1.0,1.0,1.0],"intensity":0.10000000149011612,"rotation":[0.7071068286895752,0.0,0.0,0.7071068286895752],"parent":"0"}],"groundShader":"Custom/Gf/Effect","groundUnlit":true,"projectColorSpace":"Gamma"};

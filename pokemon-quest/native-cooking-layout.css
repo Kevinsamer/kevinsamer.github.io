@@ -1,0 +1,9 @@
+/* Original Canvas_cook geometry at 1920x1080, scaled by 2/3. */
+.native-cooking-screen{position:absolute;inset:0;background:#fff3d3;overflow:hidden}
+.native-cook-art{position:absolute;display:block;pointer-events:none;box-sizing:border-box}
+.native-cooking-screen .native-cook-control{position:absolute;border:0;border-image:none;background:none;box-shadow:none;border-radius:0;padding:0;margin:0;min-width:0;min-height:0;color:#493f34;z-index:2}
+.native-cook-text{position:absolute;display:block;text-align:center;line-height:1.12;pointer-events:none;color:#665141;overflow:hidden}
+.native-cook-control .native-cook-text{color:#fff}
+.native-cook-control .pixel-icon,.native-cook-control .original-sprite{position:absolute;left:13.333333px;top:13.333333px;width:73.333333px;height:73.333333px;object-fit:contain}
+.native-cook-count{position:absolute;left:23.333333px;top:80px;width:46.666667px;height:26.666667px;font-size:26.666667px;line-height:26.666667px;text-align:center;color:white}
+.native-cooking-screen button:disabled{opacity:.45}

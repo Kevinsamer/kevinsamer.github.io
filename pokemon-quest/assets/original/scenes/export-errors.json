@@ -1,0 +1,26 @@
+[
+  {
+    "go": "24",
+    "error": "File unity default resources not found in reverse/client/assets/assetpack"
+  },
+  {
+    "go": "103",
+    "error": "File unity default resources not found in reverse/client/assets/assetpack"
+  },
+  {
+    "go": "29",
+    "error": "File unity default resources not found in reverse/client/assets/assetpack"
+  },
+  {
+    "go": "136",
+    "error": "File unity default resources not found in reverse/client/assets/assetpack"
+  },
+  {
+    "go": "326",
+    "error": "File unity default resources not found in reverse/client/assets/assetpack"
+  },
+  {
+    "go": "434",
+    "error": "File unity default resources not found in reverse/client/assets/assetpack"
+  }
+]

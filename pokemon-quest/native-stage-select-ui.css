@@ -1,0 +1,14 @@
+.native-stage-select{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5;touch-action:pan-x}
+.native-stage-select-content{position:absolute;inset:0;pointer-events:none}
+.native-stage-select-card{position:absolute;width:246.6667px;height:186.6667px;padding:0;border:0;background:none;color:#fff;pointer-events:auto;cursor:pointer;overflow:visible;font:inherit}
+.native-stage-select-card:disabled{cursor:default;opacity:1}
+.native-stage-select-art,.native-stage-select-text{position:absolute;box-sizing:border-box;pointer-events:none}
+.native-stage-select-text{display:flex;align-items:center;justify-content:center;white-space:nowrap;font-weight:400;line-height:1}
+.native-stage-select-card:focus-visible{outline:3px solid #ffd747;outline-offset:0}
+.native-stage-select-card{transform-origin:123.333333px 93.333333px}
+.area-team .camp-team{left:0;top:0;bottom:auto}.area-team .team-power{left:414px;top:552px;bottom:auto}
+/* Decorative region overlay must override #ui > * hit testing. */
+#ui>.native-stage-description,.native-stage-description{position:absolute;inset:0;pointer-events:none;z-index:6}
+.native-stage-description-art,.native-stage-description-text{position:absolute;box-sizing:border-box;pointer-events:none}
+.native-stage-material-pie{position:absolute;pointer-events:none}
+.native-stage-description-text{display:flex;align-items:center;justify-content:center;white-space:nowrap;font-weight:400;line-height:1}

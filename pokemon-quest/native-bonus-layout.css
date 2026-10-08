@@ -1,0 +1,4 @@
+/* Resident bonus_group, authored button_bonus_group_in final bounds. */
+.native-expedition-bonus{position:absolute;inset:0;pointer-events:none}
+.native-bonus-art{position:absolute;display:block;box-sizing:border-box;pointer-events:none}
+.native-bonus-text{position:absolute;display:flex;align-items:center;justify-content:center;line-height:1;color:white;white-space:nowrap;pointer-events:none}

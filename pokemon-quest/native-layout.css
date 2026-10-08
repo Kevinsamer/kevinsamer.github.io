@@ -1,0 +1,34 @@
+/* Coordinates recovered from original UI animation display endpoints; 1920×1080 → 1280×720. */
+.bottom-left,.camp-team,.top-left,.top-right{position:absolute;inset:0;width:1280px;height:720px;pointer-events:none}.bottom-left>button,.camp-team>button,.top-right>div,.top-left>div{pointer-events:auto}
+.bottom-left>.square-button:nth-child(1){position:absolute;left:12.666666666666666px;top:608.6666666666666px;width:100px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.bottom-left>.square-button:nth-child(2){position:absolute;left:123.33333333333333px;top:608.6666666666666px;width:100px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.bottom-left>.square-button:nth-child(3){position:absolute;left:234px;top:608.6666666666666px;width:100px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.camp-team>.edit{position:absolute;left:411.3333333333333px;top:608.6666666666666px;width:126.66666666666666px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.camp-team>.mini-monster:nth-child(2){position:absolute;left:548px;top:608.6666666666666px;width:100px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.camp-team>.mini-monster:nth-child(3){position:absolute;left:658px;top:608.6666666666666px;width:100px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.camp-team>.mini-monster:nth-child(4){position:absolute;left:768px;top:608.6666666666666px;width:100px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.expedition{position:absolute;left:946px;top:608.6666666666666px;width:322px;height:100px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.team-power{position:absolute;left:418px;top:556px;width:114.66666666666666px;height:34.666666666666664px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.page-label{position:absolute;left:10px;top:10px;width:466.66666666666663px;height:66.66666666666666px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.bonus{position:absolute;left:10px;top:80px;width:320px;height:66.66666666666666px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.tickets{position:absolute;left:1008px;top:12px;width:260px;height:62.666666666666664px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.battery{position:absolute;left:800px;top:10px;width:200px;height:66.66666666666666px;margin:0;min-width:0;min-height:0;max-width:none;bottom:auto;right:auto}
+.square-button{padding:5px}.camp-team .mini-monster{padding:4px}.camp-team>.edit{padding:8px}.camp-team>.edit .pixel-icon{width:85px;height:70px}.expedition{padding:8px}.expedition .pixel-icon{height:64px}.page-label{font-size:36px}.bonus{font-size:18px;padding:18px 8px}.top-right .battery,.top-right .tickets{font-size:24px;display:flex;align-items:center;justify-content:center}.team-power{font-size:24px;padding:2px}
+
+.square-button,.camp-team>.edit,.expedition{font-size:20px}.square-button .pixel-icon,.camp-team>.edit .pixel-icon{height:60px}.expedition .pixel-icon{height:56px}.team-power{width:280px;white-space:nowrap;display:flex;align-items:center;justify-content:center;height:35px}
+
+.team-power{left:414px;top:552px;width:122.667px;height:42.667px;display:block;text-align:center;font-size:32px;padding:3px}.native-team-power-icon{position:absolute;left:9.333px;top:-23.733px;width:104px;height:45.333px}.team-power strong{display:block;font-size:32px;line-height:32px}
+
+.stone-board{display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);gap:13.333px;padding:0;width:326.667px;border:0;background:none}.stone-slot{width:100px;height:100px;border:0;border-radius:0;padding:0;position:relative;background:none!important;box-shadow:none!important;overflow:visible}.stone-slot:disabled{opacity:1}.native-slot-background,.native-slot-crack{position:absolute;inset:0;width:100px;height:100px;pointer-events:none}.stone-slot .native-stone-gem{position:relative;z-index:1;width:85.333px;height:85.333px}.stone-slot small{position:absolute;bottom:9px;left:0;right:0;z-index:2;font-size:20px;color:white}.stone-slot.active{outline:3px solid white;outline-offset:1px}.stone-grid{grid-template-columns:repeat(5,100px);grid-auto-rows:100px;gap:13.333px}.stone-item{width:100px;height:100px;padding:0;font-size:20px}.stone-item .native-stone-gem{width:85.333px;height:85.333px}.stone-item small{font-size:15px}
+
+.stone-item{position:relative}.stone-item .native-stone-gem{position:absolute;left:7.333px;top:7.333px}.native-stone-value{position:absolute;left:0;right:0;bottom:9px;z-index:2}.stone-item small{position:absolute;right:5px;top:5px;z-index:3}
+
+.native-skill-icon{width:64px;height:64px;display:block;margin:0 auto}.native-auto-icon{width:77.333px;height:42.667px}.native-scatter-icon{width:84.667px;height:72.667px;display:block}
+
+/* Full-screen positioning groups pass clicks through to the scene hotspots. */
+#ui>.bottom-left,#ui>.camp-team,#ui>.top-left,#ui>.top-right,#ui>.area-team,#ui>.native-battle-hud{pointer-events:none}
+#ui>.area-team button{pointer-events:auto}
+
+.team-power strong{position:relative;z-index:1}
+
+#game.scene-pannable{touch-action:none}

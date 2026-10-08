@@ -1,0 +1,3 @@
+/** Four original skill-board cells. Preserve source indices when available.
+ * Older generated buddies lack slot lottery results and use the starter layout. */
+export function originalSkillStoneCapacities(monster){const count=monster.moves.length,raw=monster.skillSlotIndices??monster.clientUniqueSkillSlots,indices=Array.isArray(raw)?raw.filter(i=>Number.isInteger(i)&&i>=0&&i<4).slice(0,count):count>1?[0,2]:[0],capacities=Array(count).fill(0);let owner=0;for(let slot=0;slot<4;slot++){const skill=indices.indexOf(slot);if(skill>=0)owner=skill;else if(owner<count)capacities[owner]++;}return capacities;}

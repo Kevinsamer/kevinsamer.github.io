@@ -1,0 +1,1 @@
+{"source":"scenes_normal_00 / BuildPlayer-Normal_00","gameObject":11,"name":"StageCollision","layer":15,"transformID":544,"position":[0,0,0],"rotation":[0,0,0,1],"scale":[1,1,1],"colliderID":562,"type":"BoxCollider","enabled":true,"isTrigger":false,"center":[0,0,0],"size":[300,1,300]}

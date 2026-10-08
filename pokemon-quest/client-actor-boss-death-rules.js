@@ -1,0 +1,5 @@
+// Original BattleManager.BossDeadEffect and separate DemoLastBossEscapeManager.
+export const ORIGINAL_BOSS_DEATH_RULES={battle:{motion:14,animatorUpdateMode:2,shadowIgnoreTimeScale:true,voiceDelay:.3,bodyClip:'Mmotion_dead_boss',bodyDuration:3.000000238418579,effects:[248,249],waitsFor:'both second effect iterator complete and IsFinishedMotion(14)',postFinishDelay:.5,doesNotDestroyActorInCoroutine:true},escapeDemo:{manager:'DemoLastBossEscapeManager',speciesExplicitlyCreated:150,createdScale:[2.5,2.5,2.5],motion:29,bodyClip:'Mmotion_dead_lastboss_esc',bodyDuration:3.000000238418579,afterMotionWait:2.5,scaleOutDuration:.7,scaleOutEaseEnum:18,scaleOutTarget:[0,0,0],afterScaleOutStartWait:3,voiceMonsterNo:150,soundEventID:0x0c0c4b34},lastBossDungeon:{challengeDungeon:10},deadLastBoss28:{bodyClip:'Mmotion_dead_lastboss',duration:5.833333492279053,callerEstablished:false}};
+export function originalBattleBossDeathMotion(){return 14;}
+export function originalBossDeathTailReady({secondEffectFinished,motion14Finished}){return Boolean(secondEffectFinished&&motion14Finished);}
+export function originalLastBossDungeon(challengeDungeon){return challengeDungeon===10;}

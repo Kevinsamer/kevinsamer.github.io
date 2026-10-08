@@ -1,0 +1,15 @@
+/* SelectMessageWindow authored RectTransform bounds, 1920x1080 -> 1280x720.
+ * Actor placement comes from original Unity PokemonPoint world transforms. */
+.native-starter-screen{position:absolute;inset:0;pointer-events:none}
+.native-starter-screen .native-starter-actor{position:absolute;transform:translate(-50%,-100%);width:126px;height:126px;padding:0;border:0;border-image:none;background:none;box-shadow:none;pointer-events:auto}
+.native-starter-actor .portrait{position:absolute;inset:0;width:126px;height:126px}
+.native-starter-actor.selected{filter:drop-shadow(0 0 4px #fff)}
+.native-starter-message{position:absolute;left:-360px;top:593.333333px;width:2000px;height:66.666667px;background:rgba(0,0,0,.39215687);pointer-events:auto}
+.native-starter-screen .native-starter-confirm{position:absolute;left:500px;top:3.333333px;width:1000px;height:60px;padding:0;border:0;border-image:none;background:none;box-shadow:none;border-radius:0;font-size:26.666667px;color:#fff;text-align:center;line-height:1.1}
+.native-starter-current{display:block;font-size:20px}
+.dialog:has(.native-recruit-result){position:absolute;inset:0;max-width:none;max-height:none;width:1280px;height:720px;margin:0;border:0;border-image:none;padding:0;background:none;box-shadow:none;overflow:hidden}
+#overlay:has(.native-recruit-result){background:none;padding:0}
+.native-recruit-result{position:absolute;inset:0;pointer-events:none}
+.native-recruit-art{position:absolute;box-sizing:border-box;display:block}
+.native-recruit-text{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;color:white}
+.native-recruit-result .native-recruit-exit{position:absolute;padding:0;border:0;border-image:none;background:none;box-shadow:none;pointer-events:auto}

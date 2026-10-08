@@ -1,0 +1,27 @@
+/* APK prefabs_commonui/charm_board. Unity reference units scaled by 2/3.
+   GridLayoutGroup: 150px cells, 20px gaps, 3 columns, UpperLeft/Horizontal.
+   Link Image rects: 32px each. Their offsets come from serialized transforms.
+   Keep semantic slot indices in data-slot; UI order is a separate engine concern. */
+.stone-layout .stone-board{position:relative;isolation:isolate;width:326.666667px;height:326.666667px;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);gap:13.333333px;padding:0;border:0;overflow:visible}
+.stone-layout .stone-board>.stone-slot{width:100px;height:100px;z-index:1}
+.stone-layout .stone-board::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-repeat:no-repeat;background-size:21.333333px 21.333333px;
+background-image:
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_yoko_-2992101977980838816.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_yoko_-2992101977980838816.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_yoko_-2992101977980838816.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_yoko_-2992101977980838816.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_yoko_-2992101977980838816.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_yoko_-2992101977980838816.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_tate_-2246457902913172727.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_tate_-2246457902913172727.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_tate_-2246457902913172727.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_tate_-2246457902913172727.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_tate_-2246457902913172727.png"),
+url("assets/original/sprites-full/prefabs_commonui/window_pcharm_pipe_tate_-2246457902913172727.png");
+background-position:96.333333px 39.333333px,209.666667px 39.333333px,96.333333px 152.666667px,209.666667px 152.666667px,96.333333px 266px,209.666667px 266px,39.333333px 99.333333px,152.666667px 99.333333px,266px 99.333333px,39.333333px 212.666667px,152.666667px 212.666667px,266px 212.666667px}
+.native-bingo-line{position:absolute;z-index:3;pointer-events:none;border:6.666667px solid transparent;border-image:url("assets/original/sprites-full/shared_34/UI_Pstone_bingo_8658346869657784536.png") 55 fill stretch;box-sizing:border-box;opacity:1}
+.native-bingo-line[hidden]{display:none}
+.native-bingo-line[data-line="0"],.native-bingo-line[data-line="1"],.native-bingo-line[data-line="2"]{left:46.666667px;width:233.333333px;height:13.333333px}
+.native-bingo-line[data-line="0"]{top:43.333333px}.native-bingo-line[data-line="1"]{top:156.666667px}.native-bingo-line[data-line="2"]{top:270px}
+.native-bingo-line[data-line="3"],.native-bingo-line[data-line="4"],.native-bingo-line[data-line="5"]{top:46.666667px;height:233.333333px;width:13.333333px}
+.native-bingo-line[data-line="3"]{left:43.333333px}.native-bingo-line[data-line="4"]{left:156.666667px}.native-bingo-line[data-line="5"]{left:270px}

@@ -1,0 +1,9 @@
+#overlay:has(.native-storage-window){padding:0;background:#0008}
+.dialog:has(.native-storage-window){position:absolute;inset:0;width:1280px;height:720px;max-height:none;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible}
+.native-storage-window{position:absolute;inset:0;pointer-events:none}
+.native-storage-art{position:absolute;box-sizing:border-box;border-style:solid;border-color:transparent;pointer-events:none}
+.dialog .native-storage-explanation{position:absolute;margin:0;display:flex;align-items:center;justify-content:center;white-space:pre-line;text-align:center;line-height:1.1;color:#323232;text-shadow:none}
+.native-storage-button{position:absolute;pointer-events:auto;padding:0;border:0;background:transparent;box-shadow:none;border-radius:0;font-size:33.333px;color:white;text-shadow:0 2px #aa8b39}
+.native-storage-button:disabled{opacity:.45}
+.dialog .native-storage-status{position:absolute;top:530px;left:220px;width:840px;margin:0;text-align:center;font-size:17px;line-height:1.5;color:white;text-shadow:0 1px #333}
+.native-storage-close{position:absolute;top:600px;left:580px;width:120px;pointer-events:auto}

@@ -1,0 +1,189 @@
+@keyframes native-tap-ring{
+0.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+1.666667%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+3.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+5.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+6.666667%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+8.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+10.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+11.666667%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+13.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+15.000000%{transform:scale(-0.000000,-0.000000);opacity:0.000000;}
+16.666667%{transform:scale(0.800000,0.800000);opacity:1.000000;}
+18.333333%{transform:scale(0.809120,0.809120);opacity:1.000000;}
+20.000000%{transform:scale(0.831360,0.831360);opacity:1.000000;}
+21.666667%{transform:scale(0.859040,0.859040);opacity:1.000000;}
+23.333333%{transform:scale(0.884480,0.884480);opacity:1.000000;}
+25.000000%{transform:scale(0.900000,0.900000);opacity:1.000000;}
+26.666667%{transform:scale(0.907945,0.907945);opacity:0.992750;}
+28.333333%{transform:scale(0.915760,0.915760);opacity:0.972000;}
+30.000000%{transform:scale(0.923415,0.923415);opacity:0.939250;}
+31.666667%{transform:scale(0.930880,0.930880);opacity:0.896000;}
+33.333333%{transform:scale(0.938125,0.938125);opacity:0.843750;}
+35.000000%{transform:scale(0.945120,0.945120);opacity:0.784000;}
+36.666667%{transform:scale(0.951835,0.951835);opacity:0.718250;}
+38.333333%{transform:scale(0.958240,0.958240);opacity:0.648000;}
+40.000000%{transform:scale(0.964305,0.964305);opacity:0.574750;}
+41.666667%{transform:scale(0.970000,0.970000);opacity:0.500000;}
+43.333333%{transform:scale(0.975295,0.975295);opacity:0.425250;}
+45.000000%{transform:scale(0.980160,0.980160);opacity:0.352000;}
+46.666667%{transform:scale(0.984565,0.984565);opacity:0.281750;}
+48.333333%{transform:scale(0.988480,0.988480);opacity:0.216000;}
+50.000000%{transform:scale(0.991875,0.991875);opacity:0.156250;}
+51.666667%{transform:scale(0.994720,0.994720);opacity:0.104000;}
+53.333333%{transform:scale(0.996985,0.996985);opacity:0.060750;}
+55.000000%{transform:scale(0.998640,0.998640);opacity:0.028000;}
+56.666667%{transform:scale(0.999655,0.999655);opacity:0.007250;}
+58.333333%{transform:scale(1.000000,1.000000);opacity:0.000000;}
+60.000000%{transform:scale(0.987259,0.987259);opacity:0.000000;}
+61.666667%{transform:scale(0.951407,0.951407);opacity:0.000000;}
+63.333333%{transform:scale(0.896000,0.896000);opacity:0.000000;}
+65.000000%{transform:scale(0.824592,0.824592);opacity:0.000000;}
+66.666667%{transform:scale(0.740741,0.740741);opacity:0.000000;}
+68.333333%{transform:scale(0.648000,0.648000);opacity:0.000000;}
+70.000000%{transform:scale(0.549926,0.549926);opacity:0.000000;}
+71.666667%{transform:scale(0.450074,0.450074);opacity:0.000000;}
+73.333333%{transform:scale(0.352000,0.352000);opacity:0.000000;}
+75.000000%{transform:scale(0.259259,0.259259);opacity:0.000000;}
+76.666667%{transform:scale(0.175407,0.175407);opacity:0.000000;}
+78.333333%{transform:scale(0.104000,0.104000);opacity:0.000000;}
+80.000000%{transform:scale(0.048593,0.048593);opacity:0.000000;}
+81.666667%{transform:scale(0.012741,0.012741);opacity:0.000000;}
+83.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+85.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+86.666667%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+88.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+90.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+91.666667%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+93.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+95.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+96.666667%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+98.333333%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+100.000000%{transform:scale(0.000000,0.000000);opacity:0.000000;}
+}
+@keyframes native-tap-finger{
+0.000000%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+1.666667%{left:29.837500px;top:42.412000px;transform:rotate(90deg) scale(0.555000,1.000000);}
+3.333333%{left:29.400000px;top:40.816000px;transform:rotate(90deg) scale(0.680000,1.000000);}
+5.000000%{left:28.762500px;top:38.464000px;transform:rotate(90deg) scale(0.815000,1.000000);}
+6.666667%{left:28.000000px;top:35.608001px;transform:rotate(90deg) scale(0.900000,1.000000);}
+8.333333%{left:26.555556px;top:32.500001px;transform:rotate(90deg) scale(0.935185,1.000000);}
+10.000000%{left:24.177779px;top:29.392001px;transform:rotate(90deg) scale(0.961481,1.000000);}
+11.666667%{left:21.400001px;top:26.536002px;transform:rotate(90deg) scale(0.980000,1.000000);}
+13.333333%{left:18.755557px;top:24.184002px;transform:rotate(90deg) scale(0.991852,1.000000);}
+15.000000%{left:16.777780px;top:22.588002px;transform:rotate(90deg) scale(0.998148,1.000000);}
+16.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+18.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+20.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+21.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+23.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+25.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+26.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+28.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+30.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+31.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+33.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+35.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+36.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+38.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+40.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+41.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+43.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+45.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+46.666667%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+48.333333%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+50.000000%{left:16.000000px;top:22.000000px;transform:rotate(90deg) scale(1.000000,1.000000);}
+51.666667%{left:16.064583px;top:22.175579px;transform:rotate(90deg) scale(0.999560,1.000000);}
+53.333333%{left:16.250000px;top:22.671296px;transform:rotate(90deg) scale(0.998148,1.000000);}
+55.000000%{left:16.543750px;top:23.440625px;transform:rotate(90deg) scale(0.995625,1.000000);}
+56.666667%{left:16.933333px;top:24.437037px;transform:rotate(90deg) scale(0.991852,1.000000);}
+58.333333%{left:17.406250px;top:25.614005px;transform:rotate(90deg) scale(0.986690,1.000000);}
+60.000000%{left:17.950000px;top:26.925000px;transform:rotate(90deg) scale(0.980000,1.000000);}
+61.666667%{left:18.552083px;top:28.323496px;transform:rotate(90deg) scale(0.971644,1.000000);}
+63.333333%{left:19.200000px;top:29.762963px;transform:rotate(90deg) scale(0.961481,1.000000);}
+65.000000%{left:19.881250px;top:31.196876px;transform:rotate(90deg) scale(0.949375,1.000000);}
+66.666667%{left:20.583334px;top:32.578704px;transform:rotate(90deg) scale(0.935185,1.000000);}
+68.333333%{left:21.293750px;top:33.861922px;transform:rotate(90deg) scale(0.918773,1.000000);}
+70.000000%{left:22.000001px;top:35.000001px;transform:rotate(90deg) scale(0.900000,1.000000);}
+71.666667%{left:22.879688px;top:36.147657px;transform:rotate(90deg) scale(0.867500,1.000000);}
+73.333333%{left:24.037501px;top:37.431251px;transform:rotate(90deg) scale(0.815000,1.000000);}
+75.000000%{left:25.351564px;top:38.761720px;transform:rotate(90deg) scale(0.750000,1.000000);}
+76.666667%{left:26.700001px;top:40.050001px;transform:rotate(90deg) scale(0.680000,1.000000);}
+78.333333%{left:27.960938px;top:41.207032px;transform:rotate(90deg) scale(0.612500,1.000000);}
+80.000000%{left:29.012501px;top:42.143751px;transform:rotate(90deg) scale(0.555000,1.000000);}
+81.666667%{left:29.732813px;top:42.771094px;transform:rotate(90deg) scale(0.515000,1.000000);}
+83.333333%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+85.000000%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+86.666667%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+88.333333%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+90.000000%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+91.666667%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+93.333333%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+95.000000%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+96.666667%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+98.333333%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+100.000000%{left:30.000000px;top:43.000000px;transform:rotate(90deg) scale(0.500000,1.000000);}
+}
+@keyframes native-tap-hand{
+0.000000%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+1.666667%{left:39.894375px;top:46.580000px;transform:scale(1.000000,0.708400);}
+3.333333%{left:39.610000px;top:45.440000px;transform:scale(1.000000,0.731200);}
+5.000000%{left:39.195626px;top:43.760000px;transform:scale(1.000000,0.764800);}
+6.666667%{left:38.700001px;top:41.720000px;transform:scale(1.000000,0.805600);}
+8.333333%{left:37.398150px;top:39.500000px;transform:scale(1.000000,0.850000);}
+10.000000%{left:34.945187px;top:37.280000px;transform:scale(1.000000,0.894400);}
+11.666667%{left:31.960002px;top:35.240000px;transform:scale(1.000000,0.935200);}
+13.333333%{left:29.061483px;top:33.560000px;transform:scale(1.000000,0.968800);}
+15.000000%{left:26.868520px;top:32.419999px;transform:scale(1.000000,0.991600);}
+16.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+18.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+20.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+21.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+23.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+25.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+26.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+28.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+30.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+31.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+33.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+35.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+36.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+38.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+40.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+41.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+43.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+45.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+46.666667%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+48.333333%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+50.000000%{left:26.000000px;top:32.000000px;transform:scale(1.000000,1.000000);}
+51.666667%{left:26.064583px;top:32.119792px;transform:scale(1.000000,0.997211);}
+53.333333%{left:26.250000px;top:32.458333px;transform:scale(1.000000,0.989352);}
+55.000000%{left:26.543750px;top:32.984375px;transform:scale(1.000000,0.977187);}
+56.666667%{left:26.933333px;top:33.666667px;transform:scale(1.000000,0.961481);}
+58.333333%{left:27.406250px;top:34.473959px;transform:scale(1.000000,0.942998);}
+60.000000%{left:27.950000px;top:35.375000px;transform:scale(1.000000,0.922500);}
+61.666667%{left:28.552083px;top:36.338542px;transform:scale(1.000000,0.900752);}
+63.333333%{left:29.200000px;top:37.333334px;transform:scale(1.000000,0.878519);}
+65.000000%{left:29.881250px;top:38.328126px;transform:scale(1.000000,0.856562);}
+66.666667%{left:30.583334px;top:39.291667px;transform:scale(1.000000,0.835648);}
+68.333333%{left:31.293750px;top:40.192709px;transform:scale(1.000000,0.816539);}
+70.000000%{left:32.000001px;top:41.000001px;transform:scale(1.000000,0.800000);}
+71.666667%{left:32.879688px;top:41.832032px;transform:scale(1.000000,0.784219);}
+73.333333%{left:34.037501px;top:42.781251px;transform:scale(1.000000,0.767500);}
+75.000000%{left:35.351564px;top:43.777345px;transform:scale(1.000000,0.750781);}
+76.666667%{left:36.700001px;top:44.750001px;transform:scale(1.000000,0.735000);}
+78.333333%{left:37.960938px;top:45.628907px;transform:scale(1.000000,0.721094);}
+80.000000%{left:39.012501px;top:46.343751px;transform:scale(1.000000,0.710000);}
+81.666667%{left:39.732813px;top:46.824219px;transform:scale(1.000000,0.702656);}
+83.333333%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+85.000000%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+86.666667%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+88.333333%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+90.000000%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+91.666667%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+93.333333%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+95.000000%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+96.666667%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+98.333333%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+100.000000%{left:40.000000px;top:47.000000px;transform:scale(1.000000,0.700000);}
+}

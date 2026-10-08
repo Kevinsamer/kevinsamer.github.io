@@ -1,0 +1,12 @@
+.native-team-ui{position:absolute;inset:0;width:1280px;height:720px;overflow:hidden;color:white;isolation:isolate;font-family:inherit}
+.native-team-ui .native-team-art,.native-team-ui .native-team-text,.native-team-ui .native-team-hit,.native-team-ui .native-team-portrait,.native-team-ui #team-art,.native-team-ui .native-team-page-dot{position:absolute;box-sizing:border-box;margin:0}
+.native-team-ui .native-team-art,.native-team-ui .native-team-text,.native-team-ui .native-team-portrait,.native-team-ui .native-team-page-dot{pointer-events:none}
+.native-team-ui .native-team-text{display:flex;align-items:center;justify-content:center;white-space:pre-line;line-height:1.1;font-weight:700;text-align:center}
+.native-team-ui .native-team-hit{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;min-width:0;min-height:0;color:transparent;cursor:pointer;z-index:5}
+.native-team-ui .native-team-hit:focus-visible{outline:3px solid white;outline-offset:-3px}
+.native-team-ui .native-team-cell{cursor:grab;touch-action:none}
+.native-team-ui .native-team-cell:active{cursor:grabbing}
+.native-team-ui .native-team-page-dot{opacity:.35;background-size:100% 100%;background-repeat:no-repeat}
+.native-team-ui .native-team-page-dot.current{opacity:1}
+.native-team-ui .native-team-exp-fill{position:absolute;pointer-events:none}
+.native-team-ui .native-team-remove-target{position:absolute;z-index:4}

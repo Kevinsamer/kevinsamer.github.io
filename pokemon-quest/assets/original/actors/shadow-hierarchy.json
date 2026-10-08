@@ -1,0 +1,56 @@
+{
+  "assetPath": "assets/unloadresources/assetbundle/resident/graphics/shadow/fbx/shadow_monster.fbx",
+  "sourceFile": "CAB-28985c096a49343db1b8f23974aab554",
+  "sourceGameObjectID": "1891045106022896015",
+  "nodes": [
+    {
+      "name": "shadow_monster",
+      "parent": null,
+      "position": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        -0.0,
+        -0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "components": [
+        "Transform",
+        "MeshFilter",
+        "MeshRenderer",
+        "Animator"
+      ]
+    }
+  ],
+  "runtime": {
+    "parent": "instantiated actor GameObject",
+    "worldPositionStays": false,
+    "componentAdded": "PokemonShadow",
+    "componentAndMeshSameGameObject": true,
+    "initializeLocalPosition": [
+      0,
+      0,
+      0
+    ],
+    "followPath": "rootJT",
+    "followRelativeTo": "shadowTransform.parent",
+    "m_shadowCenterAppliedBeforeInitialize": true,
+    "m_shadowCenterOverwrittenByInitialize": true,
+    "m_shadowScalePreserved": true
+  },
+  "evidence": {
+    "zeroGetter": "UnityEngine.CoreModule.dll Vector3.get_zero@c6af64",
+    "pathLiteralIndex": 5625,
+    "addComponent": "generic6b5e90 calls GameObject.AddComponent@f55b78",
+    "parent": "Factory@7516fc",
+    "initialize": "Factory@751750"
+  }
+}

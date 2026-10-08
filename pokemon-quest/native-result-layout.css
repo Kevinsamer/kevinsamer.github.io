@@ -1,0 +1,26 @@
+@import url('./native-tap-animation.css');
+/* Original result_title / monster_status_charm animation endpoints. */
+#overlay:has(.native-exp-result){background:none;padding:0}
+.native-exp-result{position:absolute;inset:0;overflow:hidden}
+.native-result-art{position:absolute;box-sizing:border-box;display:block;pointer-events:none}
+.native-result-dimmer{position:absolute;inset:0;background:#000a;pointer-events:none}
+.native-result-text{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;pointer-events:none;white-space:nowrap}
+.native-result-portrait{position:absolute}
+.native-result-portrait .portrait{width:100%;height:100%}
+.native-result-exp-fill{position:absolute;background:#ffc629;pointer-events:none}
+.native-result-stone-cell,.native-result-skill{position:absolute;display:block;pointer-events:none}
+.native-result-stone-cell>.original-sprite,.native-result-stone-cell>.native-stone-gem,.native-result-skill>.original-sprite{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.native-exp-result .native-result-continue{position:absolute;left:1200px;top:653.333333px;width:66.666667px;height:66.666667px;background:none;padding:0;border:0;border-image:none;box-shadow:none}
+.native-tap-marker{position:absolute;left:6.666667px;top:6.666667px;width:80px;height:80px;transform:scale(.666666667);transform-origin:0 0;pointer-events:none}
+.native-tap-marker span{position:absolute;box-sizing:border-box;display:block}
+.native-tap-ring{left:-5px;top:-5px;width:90px;height:90px;animation:native-tap-ring 1s linear infinite}
+.native-tap-finger{width:40px;height:20px;transform-origin:50% 50%;animation:native-tap-finger 1s linear infinite}
+.native-tap-hand-group{width:40px;height:30px;transform-origin:50% 50%;animation:native-tap-hand 1s linear infinite}
+.native-tap-hand{inset:0;width:40px;height:30px}
+.native-tap-thumb{left:-12px;top:10px;width:30px;height:20px}
+.native-tap-wrist{left:4.5px;top:18px;width:27px;height:20px;background:#fff}
+.native-loot-ingredient,.native-loot-stone-icon{position:absolute;display:block}
+.native-loot-ingredient.empty{opacity:.4}
+.native-loot-ingredient>.pixel-icon,.native-loot-ingredient>.original-sprite,.native-loot-stone-icon>.original-sprite{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+
+.stage-clear .native-stage-clear-continue{position:absolute;right:13.333333px;bottom:0;width:66.666667px;height:66.666667px;background:none;padding:0;border:0;border-image:none;box-shadow:none}

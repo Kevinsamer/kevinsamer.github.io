@@ -13,3 +13,9 @@
 .native-recruit-art{position:absolute;box-sizing:border-box;display:block}
 .native-recruit-text{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;color:white}
 .native-recruit-result .native-recruit-exit{position:absolute;padding:0;border:0;border-image:none;background:none;box-shadow:none;pointer-events:auto}
+
+.recruit-status{position:absolute;left:615px;top:150px;width:510px;height:345px;color:white;pointer-events:none}.recruit-status-bg{position:absolute;width:100%;height:100%;opacity:.85}.recruit-status .native-recruit-text{left:25px;justify-content:flex-start;font-size:23px;color:#655c47}.recruit-status .recruit-name{top:20px;font-size:30px}.recruit-status .recruit-level{top:65px}.recruit-status .recruit-hp{top:115px}.recruit-status .recruit-atk{top:150px}.recruit-status .recruit-move{width:455px;height:50px;background:#ffcb47;border-radius:4px;padding-left:12px;box-sizing:border-box}
+
+.recruit-status-bg{inset:0;width:100%;height:100%;opacity:1;box-sizing:border-box;border:10px solid transparent;border-image:url('assets/original/ui-tinted/window_plane_corner_243_235_216_255.png') 15 fill stretch}
+
+.recruit-source-status{background:none!important;width:auto!important;height:auto!important;left:0!important;top:0!important}.recruit-source-status button{pointer-events:none}.recruit-source-status .native-monster-detail{background:none}

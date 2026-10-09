@@ -5,12 +5,19 @@
 .native-shop-hit:disabled{background:transparent;opacity:1;cursor:default}
 .native-shop-battery{position:absolute;left:840px;top:195px;width:220px;height:95px;font-size:22px}
 .native-shop-box-note{position:absolute;top:190px;width:333.333px;text-align:center;font-size:24px;line-height:1.5;margin:0}
-.native-shop-goods{position:absolute;left:125.333px;top:158.667px;width:1033.333px;height:520px;overflow:auto;display:grid;grid-template-columns:repeat(4,1fr);align-content:start;gap:16px;padding:10px 14px 25px;overscroll-behavior:contain;touch-action:pan-y}
-.native-shop-good{background:#ffdc4c;border:4px solid #ffef9b;border-radius:12px;color:#5a6144;padding:10px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:285px}
-.native-shop-good-art{height:130px;width:100%;display:flex;align-items:center;justify-content:center;background:#9ed5e9;border-radius:6px;font-size:55px}
-.native-shop-good-image{max-height:120px;max-width:150px;object-fit:contain}
-.native-shop-good h3{font-size:18px;margin:10px 0 4px}.native-shop-good p{font-size:14px;margin:2px 0 12px;min-height:42px}.native-shop-good button{font-size:16px;margin-top:5px;min-width:150px}
-
+/* Source product_status cell 390x350 and button 360x340, at 2/3 scale. */
+.native-shop-goods{position:absolute;left:125.333px;top:158.667px;width:1033.333px;height:520px;overflow-y:auto;overflow-x:hidden;display:grid;grid-template-columns:repeat(4,260px);grid-auto-rows:233.333px;align-content:start;padding:0;overscroll-behavior:contain;touch-action:pan-y}
+.native-shop-good{position:relative;width:260px;height:233.333px;color:#fff}
+.native-shop-good-art{position:absolute;left:43.333px;top:23.333px;width:173.333px;height:173.333px;display:flex;align-items:center;justify-content:center;font-size:55px}
+.native-shop-good-image{width:100%;height:100%;object-fit:contain}
+.native-shop-good h3{position:absolute;left:20px;top:4.667px;width:220px;height:33.333px;line-height:33.333px;font-size:20px;text-align:center;margin:0;white-space:nowrap;text-shadow:0 2px #586b86;pointer-events:none}
+.native-shop-good .native-shop-good-preview{position:absolute;left:10px;top:3.333px;width:240px;height:226.667px;z-index:1;border:0;background:none;box-shadow:none;padding:0}
+.native-shop-good .native-shop-good-purchase{position:absolute;left:50px;top:180px;width:170px;height:38px;z-index:2;border:0;background:none;box-shadow:none;padding:0;font-size:24px;text-shadow:0 2px #786b43}
+.native-shop-good .native-shop-good-purchase:disabled{opacity:1;font-size:20px;cursor:default}
+.native-shop-detail-image{height:170px;display:flex;justify-content:center}.native-shop-detail-image img{height:100%;max-width:220px;object-fit:contain}
+.native-shop-good-detail p{text-align:center}
 .native-shop-hit[aria-pressed="true"]::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:5px;background:#fff2a0;border-radius:4px;pointer-events:none}
 
-.native-shop-good{min-height:300px}.native-shop-good-art{flex-shrink:0}.native-shop-good button{margin-top:auto;flex-shrink:0;height:42px}
+
+
+.native-shop-infinite-ingredients{position:absolute;left:840px;top:310px;width:220px;height:95px;font-size:22px}.native-shop-infinite-ingredients small{font-size:15px}

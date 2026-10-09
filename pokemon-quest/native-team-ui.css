@@ -10,3 +10,7 @@
 .native-team-ui .native-team-page-dot.current{opacity:1}
 .native-team-ui .native-team-exp-fill{position:absolute;pointer-events:none}
 .native-team-ui .native-team-remove-target{position:absolute;z-index:4}
+
+/* button_cell_monster_select: original select_check scale 1.2 -> 1.3 -> 1.2 over 0.5 seconds. */
+.native-team-ui .native-team-select-marker{transform-origin:center;animation:native-team-select-pulse .5s ease-in-out infinite}
+@keyframes native-team-select-pulse{0%,100%{transform:scale(1.2)}50%{transform:scale(1.3)}}

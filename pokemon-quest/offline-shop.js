@@ -1,3 +1,4 @@
+import {gameSaveTransaction} from './game-save-transaction.js';
 import {OFFLINE_PACKS,PACK_GOODS,PACK_POKEMON} from './client-offline-packs.js';
 import {SOURCE_SKILL_STONE_KINDS} from './client-skill-stone-lottery.js';
 import * as E from './engine.js';import * as M from './meta.js';
@@ -20,3 +21,5 @@ export function claimAllOfflinePacks(g){
  const previous={...g};Object.assign(g,next);if(!E.saveGame(g)){for(const key of Object.keys(g))delete g[key];Object.assign(g,previous);return {ok:false,message:'存档写入失败，礼包未领取，请释放浏览器存储空间'};}
  return {ok:true,message:granted?'全部礼包已领取，无限点券已开启':'已拥有全部礼包，无限点券保持开启',granted,packCount:next.offline.packIds.length};
 }
+
+export function enableInfiniteIngredients(g){return gameSaveTransaction(g,E.saveGame,()=>{g.offline??={};g.offline.infiniteIngredients=true;return {ok:true,message:'无限材料已开启，所有料理材料均可无限使用'};});}

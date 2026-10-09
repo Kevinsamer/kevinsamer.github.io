@@ -1,3 +1,6 @@
+import {RECRUIT_MOTION,recruitMotionSample,recruitArrivalDuration,recruitCameraEase,recruitFacingCamera,recruitLookAngle,recruitGroupDuration,recruitGroupSample,recruitCampPosition} from './camp-recruit-motion.js';
+import {createCampSceneAnimations} from './native-camp-animation.js';
+import {createCampBehavior} from './camp-behavior.js';
 import {createOriginalBossDeathLifecycle} from './native-boss-death-lifecycle.js';
 import {CLIENT_TEAM_SCENE_SOURCE as TEAM_SOURCE} from './client-team-scene-source.js';
 import {originalCustomTeamModelPlan,originalCustomTeamCameraOrbit} from './client-custom-team-models.js';
@@ -17,6 +20,7 @@ import {clientSpawnInstructions} from './client-stages.js';
 import {createStageWorldPlan} from './client-spawn-plan.js';
 import {WORLD_ANCHORS} from './client-world-data.js';
 import {createMapTiles,ROTATION_ANGLES,WORLD_SCALE,worldToSimulation,simulationToWorld,spawnPoint} from './native-world-map.js';
+let campAnimationLibrary;
 const stores = {}, renderers = new WeakMap();
 const loader = new THREE.TextureLoader();
 let battleCamera,battleMapData,battleSpawns,battleNavigation,battlePreparation=0;
@@ -63,12 +67,13 @@ function build(data) {
 export const ready=Promise.all(['camp','island','intro'].map(async mode=>{
  const data=await(await fetch(`./assets/original/scenes/${mode}.json`)).json();
  if(mode==='camp'){
-  const pot=await(await fetch('./assets/original/scenes/pot.json')).json();
+  const [pot,animations]=await Promise.all([fetch('./assets/original/scenes/camp-pots.json').then(r=>r.json()),fetch('./assets/original/scenes/camp-animations.json').then(r=>r.json())]);campAnimationLibrary=animations;
   Object.assign(data.meshes,pot.meshes);Object.assign(data.materials,pot.materials);
-  const anchor=Object.keys(data.nodes).find(id=>data.nodes[id].name==='BC_pot1');
-  const group=Object.values(data.nodes).find(node=>node.name==='BC_pot1_group');
-  if(group)group.active=true;
-  for(const [id,node]of Object.entries(pot.nodes))data.nodes[id]={...node,parent:node.parent==='0'?anchor:node.parent};
+  for(let i=1;i<=4;i++){const anchor=Object.keys(data.nodes).find(id=>data.nodes[id].name==='BC_pot'+i);const group=Object.values(data.nodes).find(n=>n.name==='BC_pot'+i+'_group');if(group)group.active=i===1;
+   for(const[name,tree]of Object.entries(pot.models)){if(name!=='BC_stove'&&!name.startsWith('BC_cookrecipe_')&&!name.startsWith('BC_rare_effect')&&!/_(idle|cook|fix|press|break|select|set|close|change)$/.test(name))continue;const prefix='campPot:'+i+':'+name+':';
+    for(const[id,node]of Object.entries(tree))data.nodes[prefix+id]={...node,active:node.parent==='0'?name==='BC_stove':node.active,parent:node.parent==='0'?anchor:prefix+node.parent};
+   }
+  }
  }
  if(mode==='island'){
   const island=await(await fetch('./assets/original/scenes/islandmodel.json')).json();
@@ -78,20 +83,20 @@ export const ready=Promise.all(['camp','island','intro'].map(async mode=>{
  stores[mode]=build(data);
  if(mode==='camp')stores[mode].baseData=data;
 }));
-export async function placeOriginalCampGoods(ids=[]){
- const key=ids.join(',');if(key===campGoodsKey)return;campGoodsKey=key;const revision=++campGoodsRevision;
+export async function placeOriginalCampGoods(ids=[],placements={}){
+ const key=JSON.stringify([ids,placements]);if(key===campGoodsKey)return;campGoodsKey=key;const revision=++campGoodsRevision;
  await ready;if(revision!==campGoodsRevision)return;
  const base=stores.camp.baseData||stores.camp.data;
  const data={...base,nodes:{...base.nodes},meshes:{...base.meshes},materials:{...base.materials}};
  if(ids.length){
   goodsLibraryPromise??=fetch('./assets/original/scenes/goods.json').then(r=>r.json());const goods=await goodsLibraryPromise;if(revision!==campGoodsRevision)return;
   Object.assign(data.meshes,goods.meshes);Object.assign(data.materials,goods.materials);const used=new Set();
-  for(const id of ids){const item=goods.goods.find(g=>g.m_id===id),place=goods.placements.find(p=>p.category===item?.m_category&&!used.has(p.id)),tree=goods.models[item?.m_modelPath];if(!place||!tree)continue;used.add(place.id);
-   const root=`goods:${place.id}`;data.nodes[root]={go:root,name:item.m_modelPath,parent:'0',active:true,position:place.position,rotation:place.rotation,scale:[1,1,1]};
+  for(const id of ids){const item=goods.goods.find(g=>g.m_id===id),place=goods.placements.find(p=>p.id===placements[id]?.slot&&p.category===item?.m_category&&!used.has(p.id))||goods.placements.find(p=>p.category===item?.m_category&&!used.has(p.id)),tree=goods.models[item?.m_modelPath];if(!place||!tree)continue;used.add(place.id);
+   const root=`goods:${place.id}`;data.nodes[root]={go:root,name:item.m_modelPath,parent:'0',active:true,position:place.position,rotation:new THREE.Quaternion().fromArray(place.rotation).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),(placements[id]?.turn||0)*Math.PI/2)).toArray(),scale:[1,1,1]};
    for(const [nodeId,n]of Object.entries(tree))data.nodes[root+':'+nodeId]={...n,parent:n.parent==='0'?root:root+':'+n.parent};
   }
  }
- const previous=stores.camp;stores.camp=build(data);stores.camp.camera.position.copy(previous.camera.position);stores.camp.baseData=base;disposeScene(previous);
+ const previous=stores.camp;stores.camp=build(data);stores.camp.camera.position.copy(previous.camera.position);stores.camp.zoomDistance=previous.zoomDistance;stores.camp.baseData=base;stores.camp.campBehavior=previous.campBehavior;disposeScene(previous);
 }
 const battleReady=Promise.all([fetch('./assets/original/scenes/battle/camera.json').then(r=>r.json()),fetch('./assets/original/scenes/battle/maps.json').then(r=>r.json()),fetch('./assets/original/scenes/battle/spawns.json').then(r=>r.json()),fetch('./assets/original/scenes/navigation.json').then(r=>r.json())]).then(([camera,maps,spawns,navigation])=>{battleCamera=camera;battleMapData=maps;battleSpawns=spawns;battleNavigation=navigation;}).catch(console.error);
 export async function prepareOriginalBattle(stage){
@@ -123,7 +128,7 @@ export async function prepareOriginalBattle(stage){
 export function getOriginalBattleLayout(){return stores.battle?.layout||null;}
 export function sceneReady(mode='camp'){return !!stores[mode];}
 export function renderOriginalScene(canvas,mode='camp',time=0){
- const s=stores[mode];if(!s){const old=renderers.get(canvas);if(old?.screenOverlay)old.screenOverlay.root.hidden=true;return false;}
+ const s=stores[mode];if(mode==='camp'&&s&&campAnimationLibrary){s.campAnimations??=createCampSceneAnimations(s,campAnimationLibrary);s.campAnimations.update(time);}if(!s){const old=renderers.get(canvas);if(old?.screenOverlay)old.screenOverlay.root.hidden=true;return false;}
  let cache=renderers.get(canvas);if(!cache){const r=new THREE.WebGLRenderer({canvas,antialias:mode!=='team',alpha:mode==='team'});r.setPixelRatio(mode==='team'?1:Math.min(devicePixelRatio||1,2));r.outputColorSpace=THREE.LinearSRGBColorSpace;cache={r};renderers.set(canvas,cache);}
  const w=mode==='team'?512:(canvas.clientWidth||1280),h=mode==='team'?512:(canvas.clientHeight||720);
  if(mode==='battle'&&canvas.parentElement){
@@ -145,7 +150,14 @@ export function projectOriginalCamp(point,width=1280,height=720){
  const s=stores.camp;if(!s)return null;s.camera.aspect=width/height;s.camera.updateProjectionMatrix();s.camera.updateMatrixWorld();
  const v=new THREE.Vector3(...(Array.isArray(point)?point:[point.x,point.y,point.z]));v.z=-v.z;v.project(s.camera);return{x:(v.x+1)*width/2,y:(1-v.y)*height/2,visible:v.z>=-1&&v.z<=1};
 }
-export function focusOriginalIsland(region=1){const s=stores.island,a=WORLD_ANCHORS[region-1];if(!s||!a)return;s.camera.position.copy(s.initialCamera).add(new THREE.Vector3(a.position[0],0,-a.position[2]));s.camera.updateMatrixWorld();}
+// FieldCamera.UpdatePosition: target - camera.forward * distance; FOV remains unchanged.
+const CAMERA_ZOOM={camp:{min:25,max:70,sourceMin:25},island:{min:45,max:90,sourceMin:0}};
+// World-map min 45 is a Web safety bound: source min 0 reaches the ground while near=20.
+function sceneZoomDistance(store,mode){return Number.isFinite(store.zoomDistance)?store.zoomDistance:CAMERA_ZOOM[mode].max;}
+function cameraZoomOffset(store,mode){const range=CAMERA_ZOOM[mode];return store.camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(range.max-sceneZoomDistance(store,mode));}
+export function zoomOriginalScene(mode,delta){const s=stores[mode],range=CAMERA_ZOOM[mode];if(!s||!range||!Number.isFinite(delta))return false;const old=sceneZoomDistance(s,mode),next=THREE.MathUtils.clamp(old+delta,range.min,range.max);s.camera.position.add(s.camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(old-next));s.zoomDistance=next;s.camera.updateMatrixWorld();return true;}
+export function originalSceneCameraState(mode){const s=stores[mode],range=CAMERA_ZOOM[mode];return s&&range?{distance:sceneZoomDistance(s,mode),...range,fov:s.camera.fov,position:s.camera.position.toArray()}:null;}
+export function focusOriginalIsland(region=1){const s=stores.island,a=WORLD_ANCHORS[region-1];if(!s||!a)return;s.camera.position.copy(s.initialCamera).add(new THREE.Vector3(a.position[0],0,-a.position[2])).add(cameraZoomOffset(s,'island'));s.camera.updateMatrixWorld();}
 function panScene(mode,dx,dy){
  const s=stores[mode];if(!s||!Number.isFinite(dx)||!Number.isFinite(dy))return false;
  s.camera.updateMatrixWorld();
@@ -155,17 +167,20 @@ function panScene(mode,dx,dy){
  s.camera.position.add(from.sub(to));
  // Bounded Web camera adapter: preserve source orientation/height, expose the
  // camp edges and all region anchors without allowing endless off-map drags.
- const centers=mode==='island'?WORLD_ANCHORS.map(a=>[s.initialCamera.x+a.position[0],s.initialCamera.z-a.position[2]]):[[s.initialCamera.x,s.initialCamera.z]];
+ const offset=cameraZoomOffset(s,mode),centers=mode==='island'?WORLD_ANCHORS.map(a=>[s.initialCamera.x+a.position[0]+offset.x,s.initialCamera.z-a.position[2]+offset.z]):[[s.initialCamera.x+offset.x,s.initialCamera.z+offset.z]];
  s.camera.position.x=THREE.MathUtils.clamp(s.camera.position.x,Math.min(...centers.map(p=>p[0]))-25,Math.max(...centers.map(p=>p[0]))+25);
  s.camera.position.z=THREE.MathUtils.clamp(s.camera.position.z,Math.min(...centers.map(p=>p[1]))-25,Math.max(...centers.map(p=>p[1]))+25);
  s.camera.updateMatrixWorld();return true;
 }
 export function panOriginalIsland(dx,dy){return panScene('island',dx,dy)}
 export function panOriginalCamp(dx,dy){return panScene('camp',dx,dy)}
-export function projectOriginalCampPot(width=1280,height=720){
- const s=stores.camp;if(!s)return null;const n=Object.values(s.nodes).find(n=>n.name==='BC_pot1');if(!n)return null;
- const p=n.getWorldPosition(new THREE.Vector3());return projectOriginalCamp([p.x,p.y,-p.z],width,height);
+export function projectOriginalCampPot(width=1280,height=720,index=0,elevation=0){
+ const s=stores.camp;if(!s)return null;const n=Object.values(s.nodes).find(n=>n.name==='BC_pot'+(index+1));if(!n)return null;
+ const p=n.getWorldPosition(new THREE.Vector3());return projectOriginalCamp([p.x,p.y+elevation,-p.z],width,height);
 }
+
+// BaseCampCookingPot.plusPosY=10; BaseCampCharacter.PLUS_POS_Y=5.
+export function projectOriginalCampBubble(point,kind='character',width=1280,height=720){return projectOriginalCamp([point[0],point[1]+(kind==='pot'?10:5),point[2]],width,height);}
 
 export function projectOriginalIsland(region,width=1280,height=720){const s=stores.island,a=WORLD_ANCHORS[region-1];if(!s||!a)return null;s.camera.aspect=width/height;s.camera.updateProjectionMatrix();s.camera.updateMatrixWorld();const p=a.position,v=new THREE.Vector3(p[0],p[1]+a.labelOffsetY,-p[2]).project(s.camera);return{x:(v.x+1)*width/2,y:(1-v.y)*height/2,visible:v.z>=-1&&v.z<=1};}
 export function projectOriginalBattle(x,y,width=1280,height=720,elevation=0){const s=stores.battle;if(!s)return null;s.camera.updateMatrixWorld();const p=new THREE.Vector3((x-500)*.035,elevation,-(y-330)*.035).project(s.camera);return{x:(p.x+1)*width/2,y:(1-p.y)*height/2};}
@@ -237,10 +252,21 @@ export function updateOriginalBattleActors(b,time,species){
  for(const unit of b.units)unit.dex=species.find(s=>s.id===unit.speciesId)?.dex;
  store.actorRuntime.update(b.units,time,{paused:b.paused||b.nativeBossDeathTimeStopped,battle:b});store.actorVersion=(store.actorVersion||0)+1;
 }
+const campPotPresentation=new Map(),campPotCooking=new Map();
+export function setOriginalCampPotPresentation(index,state,cooking){if(state){campPotPresentation.set(index,state);if(cooking)campPotCooking.set(index,cooking);}else{campPotPresentation.delete(index);campPotCooking.delete(index);}}
+export function updateOriginalCampPots(count=1,cookings=[],types=[]){const s=stores.camp;if(!s)return;for(let i=1;i<=4;i++){const group=Object.values(s.nodes).find(n=>n.name==='BC_pot'+i+'_group');if(group)group.visible=i<=count;const c=cookings[i-1],tier=Math.max(0,['normal','bronze','silver','gold'].indexOf(c?.potId||types[i-1]||'normal')),model='BC_cauldron0'+(tier+1)+'_'+(campPotPresentation.get(i-1)||(c?(c.ready?'fix':'cook'):'idle'));for(const[id,n]of Object.entries(s.nodes))if(id.startsWith('campPot:'+i+':')&&n.parent?.name==='BC_pot'+i){const info=campPotCooking.get(i-1),show=campPotPresentation.get(i-1)==='select',quality=Number.isInteger(info?.tier)?info.tier:['普通','好','非常好','极致'].indexOf(info?.tier);n.visible=n.name==='BC_stove'||n.name===model||!!(show&&info&&(n.name==='BC_cookrecipe_'+String(info.recipeIndex).padStart(2,'0')||quality>0&&n.name==='BC_rare_effect0'+quality));}}}
+
+let campRecruitPresentation=null,campRecruitReturn=null;
+export function setOriginalCampRecruitPresentation(index,monster=null,time=0,options={}){const s=stores.camp;if(!s)return;if(index==null){if(campRecruitPresentation?.camera){campRecruitReturn={started:time,from:s.camera.position.clone(),to:campRecruitPresentation.camera.clone(),rotation:s.camera.quaternion.clone(),targetRotation:campRecruitPresentation.quaternion.clone(),fromDistance:sceneZoomDistance(s,'camp'),toDistance:campRecruitPresentation.distance,up:campRecruitPresentation.up,fov:campRecruitPresentation.fov};}campRecruitPresentation=null;return;}campRecruitReturn=null;const saved=campRecruitPresentation||{camera:s.camera.position.clone(),quaternion:s.camera.quaternion.clone(),distance:sceneZoomDistance(s,'camp'),up:s.camera.up.clone(),fov:s.camera.fov};campRecruitPresentation={...saved,visitorSlots:saved.visitorSlots||Object.fromEntries((options.visitors||[monster].filter(Boolean)).map((v,i)=>[v.uid,i])),index,monster,visitors:options.visitors||[monster].filter(Boolean),focusOnly:!!options.focusOnly,holdVisit:!!options.holdVisit,waiting:!!options.waiting,started:time,from:s.camera.position.clone()};}
+
+export function setOriginalCampWelcome(motion,time){if(campRecruitPresentation){campRecruitPresentation.welcome=motion;campRecruitPresentation.welcomeStarted=time;}}
+
 export function updateOriginalCampActors(game,time,species,monsterStats){
- const store=stores.camp;if(!store)return;store.actorRuntime??=createOriginalActorRuntime(store.root,{lightingProfile:store.lightingProfile});
- const units=(game.monsters||[]).slice(0,13).map((m,i)=>{const position=[-9+(i%5)*4+Math.sin(time*.22+i),0,9+Math.floor(i/5)*4];return{uid:m.uid,dex:species.find(s=>s.id===m.speciesId)?.dex,hp:1,shiny:m.shiny,modelScale:1+(monsterStats?.(game,m)?.modelScalePercent??0),position,x:position[0],y:position[2]}});
+ const store=stores.camp;if(!store)return;if(campRecruitReturn){const r=campRecruitReturn,t=recruitCameraEase(time-r.started);store.camera.position.copy(r.from).lerp(r.to,t);store.camera.quaternion.copy(r.rotation).slerp(r.targetRotation,t);store.zoomDistance=r.fromDistance+(r.toDistance-r.fromDistance)*t;store.camera.up.copy(r.up);store.camera.fov=r.fov;store.camera.updateProjectionMatrix();store.camera.updateMatrixWorld();if(t>=1)campRecruitReturn=null;}store.actorRuntime??=createOriginalActorRuntime(store.root,{lightingProfile:store.lightingProfile});
+ store.campBehavior??=createCampBehavior();
+ let units;if(campRecruitPresentation){const p=campRecruitPresentation,m=p.monster,age=Math.max(0,time-p.started),arrival=p.holdVisit?Infinity:p.focusOnly?0:recruitGroupDuration(p.visitors.length),focusAge=age-arrival,sample=recruitMotionSample(focusAge>=0?recruitArrivalDuration:age),[x,y,z]=focusAge>=0?recruitCampPosition(p.index,p.visitorSlots[m?.uid]??0):sample.position;if(m){if(focusAge<0){const node=store.nodes['239'];if(node){node.updateWorldMatrix(true,false);node.getWorldPosition(store.camera.position);store.camera.up.set(0,1,0).transformDirection(node.matrixWorld);store.camera.lookAt(new THREE.Vector3(0,0,1).applyMatrix4(node.matrixWorld));store.camera.fov=store.data.cameras.find(c=>c.go===store.data.nodes['239']?.go)?.tree['field of view']||25;store.camera.updateProjectionMatrix();}p.visitCamera=store.camera.position.clone();}else{store.camera.quaternion.copy(p.quaternion);store.camera.up.copy(p.up);store.camera.fov=p.fov;store.camera.updateProjectionMatrix();const forward=store.camera.getWorldDirection(new THREE.Vector3()),focus=new THREE.Vector3(x-4,y-1,-z),dest=focus.addScaledVector(forward,-RECRUIT_MOTION.distance);store.camera.position.copy(p.visitCamera||p.from).lerp(dest,recruitCameraEase(focusAge));store.zoomDistance=RECRUIT_MOTION.distance;}store.camera.updateMatrixWorld();}else{const pot=Object.values(store.nodes).find(n=>n.name==='BC_pot'+(p.index+1)+'_group');if(pot){pot.updateWorldMatrix(true,false);const target=pot.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0,-2,0));store.camera.quaternion.copy(p.quaternion);store.camera.up.copy(p.up);store.camera.fov=p.fov;store.camera.updateProjectionMatrix();target.addScaledVector(store.camera.getWorldDirection(new THREE.Vector3()),-50);store.camera.position.copy(p.from).lerp(target,recruitCameraEase(age));store.zoomDistance=50;store.camera.updateMatrixWorld();}}units=m&&focusAge<0?recruitGroupSample(p.visitors.length,age).filter(v=>v.started&&!v.arrived).map(v=>{const visitor=p.visitors[v.index],[vx,vy,vz]=v.position;return {uid:visitor.uid,dex:species.find(s=>s.id===visitor.speciesId)?.dex,hp:1,shiny:visitor.shiny,modelScale:1,position:[vx,vy,vz],x:vx,y:vz,facing:Math.PI,animationKey:"run_motion",nativeSilhouette:true,campState:"visiting",visitIndex:v.index};}):m?[{uid:m.uid,dex:species.find(s=>s.id===m.speciesId)?.dex,hp:1,shiny:m.shiny,modelScale:1,position:[x,y,z],x,y:z,nativeFacingImmediate:sample.arrived,facing:sample.arrived?recruitLookAngle(recruitFacingCamera([x,y,z],store.camera.position.toArray()),focusAge):Math.PI,animationKey:sample.arrived?(p.welcome?.key||'idle_motion'):'run_motion',campState:'recruiting'}]:store.campBehavior.update({...game,monsters:game.monsters.filter(m=>!p.visitors.some(v=>v.uid===m.uid))},time,species,monsterStats,campObstacleBounds(store));}else units=store.campBehavior.update(game,time,species,monsterStats,campObstacleBounds(store));if(campRecruitPresentation?.waiting){const p=campRecruitPresentation,ids=new Set(p.visitors.map(v=>v.uid));units=units.filter(u=>!ids.has(u.uid)).concat(p.visitors.map((m,i)=>{const [x,y,z]=recruitCampPosition(p.index,i);return {uid:m.uid,dex:species.find(s=>s.id===m.speciesId)?.dex,hp:1,shiny:m.shiny,position:[x,y,z],x,y:z,facing:Math.PI,animationKey:'idle_motion',campState:'waiting'};}));}store.campActorUnits=units;
  store.actorRuntime.update(units,time);store.actorVersion=(store.actorVersion||0)+1;
+ if(campRecruitPresentation?.waiting)frameWaitingCampVisitors(store,campRecruitPresentation,time);
  if(!Object.hasOwn(game,'nativeCampActorUIDs'))Object.defineProperty(game,'nativeCampActorUIDs',{value:[],writable:true,configurable:true});game.nativeCampActorUIDs=units.filter(u=>u.nativeActorRendered).map(u=>u.uid);
 }
 export function updateOriginalStarterActors(time,species,ids,selected,points){
@@ -328,4 +354,36 @@ export function updateOriginalBossDeaths(b,time){
   if(death.lifecycle.finished)death.unit.nativeBossDeathFinished=true;
  }
  b.nativeBossDeathTimeStopped=b.nativeBossDeaths.some(d=>d.lifecycle.freezesBattle);
+}
+
+export function reactOriginalCampActor(uid,time){stores.camp?.campBehavior?.react(uid,time);}
+export function campActorPositions(){return stores.camp?.campActorUnits||[];}
+
+export function projectOriginalCampActorBounds(uid,width=1280,height=720,padding=12){const s=stores.camp,instance=s?.actorRuntime?.instances.get(uid);if(!instance?.model)return null;const box=new THREE.Box3();for(const node of Object.values(instance.model.nodes)){if(!node.isMesh)continue;let visible=true;for(let p=node;p;p=p.parent)if(!p.visible){visible=false;break;}if(!visible)continue;node.updateWorldMatrix(true,false);if(node.isSkinnedMesh&&instance.boundsAction!==instance.action)node.computeBoundingBox();box.union(new THREE.Box3().setFromObject(node));}instance.boundsAction=instance.action;if(box.isEmpty())return null;const points=[];for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){const p=new THREE.Vector3(x,y,z).project(s.camera);if(p.z>=-1&&p.z<=1)points.push([(p.x+1)*width/2,(1-p.y)*height/2]);}if(!points.length)return null;const left=Math.max(0,Math.min(...points.map(p=>p[0]))-padding),top=Math.max(0,Math.min(...points.map(p=>p[1]))-padding),right=Math.min(width,Math.max(...points.map(p=>p[0]))+padding),bottom=Math.min(height,Math.max(...points.map(p=>p[1]))+padding);return right>left&&bottom>top?{left,top,width:right-left,height:bottom-top}:null;}
+
+export function originalCampActorMaterialSnapshot(uid){const i=stores.camp?.actorRuntime?.instances.get(uid);return i?.model?Object.values(i.model.nodes).filter(n=>n.isMesh).map(n=>({name:n.name,color:n.userData.originalActorColor||null})):[];}
+
+export function originalCampPotModels(){const s=stores.camp;return s?Array.from({length:4},(_,i)=>Object.entries(s.nodes).find(([id,n])=>id.startsWith('campPot:'+(i+1)+':')&&n.visible&&n.name.startsWith('BC_cauldron')&&n.parent?.name==='BC_pot'+(i+1))?.[1]?.name):[];}
+
+export function originalCampCookingSnapshot(){const s=stores.camp;if(!s)return[];return Object.entries(s.nodes).filter(([id,n])=>id.startsWith('campPot:')&&n.parent?.name?.startsWith('BC_pot')&&n.visible).map(([id,n])=>{n.updateWorldMatrix(true,true);const cap=n.getObjectByName('pot_cap'),body=n.getObjectByName('pot_base'),box=body?new THREE.Box3().setFromObject(body):null;return{id,name:n.name,capRotation:cap?.quaternion.toArray(),bodyBounds:box&&!box.isEmpty()?{min:box.min.toArray(),max:box.max.toArray()}:null};});}
+
+export function originalCampAnimationReport(){return stores.camp?.campAnimations?.report()||[];}
+
+function campObstacleBounds(s){const key=Object.entries(s.nodes).filter(([id,n])=>id.startsWith('campPot:')&&n.name==='BC_stove').map(([id,n])=>id+':'+!!n.parent?.parent?.visible).join('|');if(s.campObstacles&&s.campObstacleKey===key)return s.campObstacles;s.campObstacleKey=key;s.root.updateMatrixWorld(true);const obstacles=[];for(const[id,n]of Object.entries(s.nodes)){const goods=id.startsWith('goods:')&&id.split(':').length===2,stove=id.startsWith('campPot:')&&n.name==='BC_stove'&&n.parent?.parent?.visible;if(!goods&&!stove)continue;const box=new THREE.Box3().setFromObject(n);if(!box.isEmpty()&&box.max.y-box.min.y>.1)obstacles.push({minX:box.min.x,maxX:box.max.x,minZ:-box.max.z,maxZ:-box.min.z});}return s.campObstacles=obstacles;}
+
+export function originalCampMotionSnapshot(){const s=stores.camp;if(!s)return[];return Object.entries(s.nodes).filter(([id,n])=>['drone','model','propera1','propera2','propera3','propera4','boathouse_anim','fire','pot_cap','cook_kemuri'].includes(n.name)||id.startsWith('goods:')).map(([id,n])=>({id,name:n.name,position:n.position.toArray(),rotation:n.quaternion.toArray(),scale:n.scale.toArray()}));}
+
+// Keep the source pot-specific arrival points; frame the visitors, not the pot.
+function frameWaitingCampVisitors(store,p,time){
+ if(!p.waitingFrame){
+  const box=new THREE.Box3();
+  for(const visitor of p.visitors){const model=store.actorRuntime.instances.get(visitor.uid)?.model;if(!model)return;for(const node of Object.values(model.nodes)){if(!node.isMesh)continue;let visible=true;for(let a=node;a;a=a.parent)if(!a.visible){visible=false;break;}if(!visible)continue;node.updateWorldMatrix(true,false);if(node.isSkinnedMesh)node.computeBoundingBox();box.union(new THREE.Box3().setFromObject(node));}}
+  if(box.isEmpty())return;
+  const center=box.getCenter(new THREE.Vector3()),inverse=p.quaternion.clone().invert(),tanY=Math.tan(p.fov*Math.PI/360),tanX=tanY*1280/720;
+  let distance=50;
+  for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){const v=new THREE.Vector3(x,y,z).sub(center).applyQuaternion(inverse);distance=Math.max(distance,v.z+Math.abs(v.x)/(tanX*.7),v.z+Math.abs(v.y)/(tanY*.58));}
+  const forward=new THREE.Vector3(0,0,-1).applyQuaternion(p.quaternion);
+  p.waitingFrame={position:center.addScaledVector(forward,-distance),distance};
+ }
+ const t=recruitCameraEase(time-p.started);store.camera.quaternion.copy(p.quaternion);store.camera.up.copy(p.up);store.camera.fov=p.fov;store.camera.position.copy(p.from).lerp(p.waitingFrame.position,t);store.zoomDistance=p.waitingFrame.distance;store.camera.updateProjectionMatrix();store.camera.updateMatrixWorld();
 }

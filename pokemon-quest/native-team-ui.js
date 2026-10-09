@@ -20,8 +20,10 @@ function inventory({game,selected,species,monsterStats,page=0,order='level'}){
  list.slice(page*20,page*20+20).forEach((m,i)=>{const b=originalTeamGridCell(i),dx=b[0]-1020,dy=b[1]-465,chosen=m.uid===selected,inTeam=game.team.includes(m.uid),prefix='Canvas/custom_team_all/monster_all/cell_monster/';
   const variant=chosen?'button_G':inTeam?'button_R':'button_B';
   for(const r of L.filter(r=>r.path.startsWith(prefix+variant)&&r.images.length))html+=art(r,dx,dy);
+  // Original icon sibling order: shadow, select_check, model, hit range.
+  // The white selection plate belongs behind the Pokemon, never over its face.
+  if(chosen)html+=art(L.find(r=>r.path===prefix+'icon/select_check'),dx,dy).replace('native-team-art','native-team-art native-team-select-marker');
   html+=portrait(m,[b[0]+25,b[1]+10,100,100],species);
-  if(chosen)html+=art(L.find(r=>r.path===prefix+'icon/select_check'),dx,dy);
   html+=text(527,`Lv. ${m.level}`,{dx,dy});
   html+=`<button type="button" draggable="true" data-team-remove-target="true" data-drag-monster="${esc(m.uid)}" data-select="${esc(m.uid)}" data-team-toggle="${esc(m.uid)}" class="native-team-hit native-team-cell${chosen?' selected':''}" style="${rect(b)}" aria-label="${esc(speciesFor(species,m)?.name||m.name||m.speciesId)} Lv.${m.level}${inTeam?' 队伍成员':''}" title="拖到队伍槽位；双击或按 Enter 加入／移出队伍"></button>`;
  });
